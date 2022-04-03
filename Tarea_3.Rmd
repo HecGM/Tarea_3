@@ -46,6 +46,94 @@ knitr::opts_chunk$set(
 # Preguntas teóricas
 **Resuelva los ejercicios 9.1, 9.4, 9.8 y 9.11 (5a edición). Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX.**
 
+## Ejercicio 9.1, Romer (5ta Edicion)
+
+\begin{enumerate}
+\item[] \textbf{9.1} Consider a firm that produces output using a Cobb Douglas combination of capital
+and labor:$Y=K^{\alpha}L^{1- \alpha},0<\alpha<1$. Suppose that the firm’s price is fixed in the short run; thus it takes both the price of its product, $P$ , and the quantity, $Y$, as given. Input markets are competitive; thus the firm takes the wage, $W$, and the rental price of capital, $r_{K}$, as given.
+\end{enumerate}
+
+### (a)
+\begin{enumerate}
+\item[] \textit{What is the firm’s choice of $L$ given $P$ , $Y$, $W$, and $K$?}
+\end{enumerate}
+
+### (b)
+\begin{enumerate}
+\item[] \textit{Given this choice of $L$, what are profits as a function of $P$, $Y$, $W$, and $K$?}
+\end{enumerate}
+
+### (c)
+\begin{enumerate}
+\item[] \textit{Find the first-order condition for the profit-maximizing choice of $K$. Is the second-order condition satisfied?}
+\end{enumerate}
+
+### (d)
+\begin{enumerate}
+\item[] \textit{Solve the first-order condition in part (c) for $K$ as a function of $P$ , $Y$, $W$, and $r_{K}$. How, if at all, do changes in each of these variables affect $K$?}
+\end{enumerate}
+
+
+
+## Ejercicio 9.4, Romer (5ta Edicion)
+
+\begin{enumerate}
+\item[] \textbf{9.4}Building intuition concerning the transversality condition. Consider an individual choosing the path of $G$ to maximize $\int_{t=0}^{\infty}e^{-\rho t}\left[- \frac{a}{2}G(t)^{2} \right]dt,a>0,\rho>0$. Here $G(t)$ is the amount of garbage the individual creates at time t; for simplicity, we allow for the possibility that $G$ can be negative. The individual’s creation of garbage affects his or her stock of trash. In particular, the stock of trash, $T$, evolves according to $T=0,\dot{T}(t)=G(t)$
+\end{enumerate}
+
+### (a)
+\begin{enumerate}
+\item[] \textit{Prove using as little math as possible that the utility-maximizing path is $G(t) = 0 \quad \forall t$.}
+\end{enumerate}
+
+### (b)
+\begin{enumerate}
+\item[] \textit{Suppose we want to analyze this problem using the calculus of variations. Let $G$ be the control variable and $T$ the state variable, and let $\mu$ denote the costate variable. What is the current-value Hamiltonian?}
+\end{enumerate}
+
+### (c)
+\begin{enumerate}
+\item[] \textit{Find the conditions for optimality other than the transversality condition. Describe the paths of $G$ that satisfy those conditions.}
+\end{enumerate}
+
+### (d)
+\begin{enumerate}
+\item[] \textit{What is the transversality condition? Show that it rules out all but one of the paths you found in part (c), and that the one remaining path is the one that you showed in part (a) to be optimal: $G(t) = 0 \quad \forall t$.}
+\end{enumerate}
+
+### (e)
+\begin{enumerate}
+\item[] \textit{Explain in a sentence or two why the solutions in (c) other than $G(t) = 0 \quad \forall t$ look as if they are utility-maximizing if one does not consider the transversality condition, and why the transversality condition rules them out.}
+\end{enumerate}
+
+
+
+## Ejercicio 9.8, Romer (5ta Edicion)
+
+\begin{enumerate}
+\item[] \textbf{9.8}Consider the model of investment in Sections 9.2 9.5. Suppose it becomes known at some date that there will be a one-time capital levy. Specifically, capital holders will be taxed an amount equal to fraction $f$ of the value of their capital holdings at some time in the future, time $T$. Assume the economy is initially in long-run equilibrium. What happens at the time of this news? How do $K$ and $q$ behave between the time of the news and the time the levy is imposed? What happens to $K$ and $q$ at the time of the levy? How do they behave thereafter? (Hint: Is $q$ anticipated to change discontinuously at the time of the levy?)
+\end{enumerate}
+
+
+
+## Ejercicio 9.11, Romer (5ta Edicion)
+
+\begin{enumerate}
+\item[] \textbf{9.11} Suppose that $\pi(K)=a-bK$ and $C(I)=\alpha I^{2}/2$
+\end{enumerate}
+
+### (a)
+\begin{enumerate}
+\item[] \textit{What is the $\dot{q} = 0$ locus? What is the long-run equilibrium value of $K$?}
+\end{enumerate}
+
+### (b)
+\begin{enumerate}
+\item[] \textit{What is the slope of the saddle path? (Hint: Use the approach in Section 2.6.)}
+\end{enumerate}
+
+
+
 
 # Ejercicios prácticos
 
