@@ -1,0 +1,110 @@
+---
+output: 
+  pdf_document:
+    includes:
+      before_body: Portada.tex
+      in_header: 
+    toc: true
+    toc_depth: 3
+  tables: true
+include-before:
+- '`\newpage{}`{=latex}'
+toc-title: Contenido
+urlcolor: blue
+header-includes:
+- \usepackage[nottoc]{tocbibind}
+- \renewcommand{\listfigurename}{Lista de figuras}
+- \renewcommand{\listtablename}{Lista de tablas}
+- \usepackage[utf8]{inputenc}
+- \usepackage[spanish]{babel}
+- \usepackage{graphicx}
+- \usepackage{float}
+- \usepackage{lscape}
+- \usepackage{amsmath}
+---
+
+\newpage
+
+\listoffigures
+
+\listoftables
+
+```{r setup,                     include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	fig.align = "center",
+	fig.height = 3,
+	fig.pos = "H",
+	fig.width = 7,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+\newpage
+
+# Preguntas teóricas
+**Resuelva los ejercicios 9.1, 9.4, 9.8 y 9.11 (5a edición). Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX.**
+
+
+# Ejercicios prácticos
+
+## Ejercicio 2.-
+**Estudie los determinantes de la inversión agregada en México siguiendo estos pasos:**
+
+### (a)
+**Obtenga, del Inegi, datos DESESTACIONALIZADOS para México del consumo "C", datos de "I", la inversión privada (inversión fija bruta), y de "Y", el PIB, entre 1980 y 2021/IV, A FRECUENCIA TRIMESTRAL, EN TÉRMINOS REALES y grafique las tres series. (Si encuentra varias series pero ninguna cubre el periodo completo, tome una decisión ejecutiva para "unir" las series.)**
+
+### (b)
+**Grafique la relación entre los cambios de I y los de Y, es decir, grafique los puntos ($\% \Delta Y_{t}$,$\% \Delta I_{t}$) poniendo la inversión en el eje de las ordenadas.**
+
+### (c)
+**Calcule la volatilidad de cada serie y la covarianza entre las tres series de tasas de crecimiento ($\% \Delta {I}$, $\% \Delta C$ y $\% \Delta Y$),  describa cuál es más volátil y cuales cambios, si los de I o los de C están más relacionados con los de Y.**
+
+### (d)
+**Obtenga, del Banco de México, datos sobre las tasas de interés reales ($r^{r}$) de la economía $r^{r}=r^{n}-\pi$, es decir, la tasa de interés nominal, menos la tasa de inflación esperada (en cuyo caso se trata de la tasa de interés real "ex-ante"), o menos la tasa de inflación observada (en cuyo caso se trata de la "ex-post") y grafíquelas.**
+
+### (e)
+**Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables.**
+
+### (f)
+**Estime otra serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$: a las especificaciones del inciso anterior, agregue valores corrientes y/o rezagados de {\it la confianza empresarial} del Inegi y de {\it la confianza del consumidor} elaborado por el Inegi y el Banco de México.**
+
+### (g)
+**Interprete los resultados.** 
+
+
+## Ejercicio 3.-
+**Estudie la habilidad de modelo de la $q$ de Tobin para explicar las tasas de inversión de empresas individuales, siguiendo estos pasos:**
+
+### (a)
+**Con el propósito de desarrollar intuición sobre la existencia y fuente de los datos corporativos, vaya al sitio de internet de algún corporativo mexicano y obtenga su reporte anual. De ahí, obtenga el valor de los activos menos los pasivos (excepto el capital) y con ello construya el ``valor en libros'' de la empresa. Posteriormente, de dicho reporte, o del sitio de la BMV o de la BIVA, obtenga el ``valor de capitalización'' de mercado de la misma empresa y finalmente construya la variable ``Q'' como la razón de dichos valores. **
+
+### (b)
+**Construya una medida (no necesariamente una buena) de ``q'' de la empresa utilizando DOS reportes corporativos, idealmente el de un trimestre y el el mismo trimestre del año anterior, y comparando el cambio del valor en libros vs el cambio del valor de capitalización.**
+
+### (c)
+**Utilice su cuenta de GitHub.com para entrar al repositorio fisionmail, Colmex\_Macro\_2\_2022 y bajar el archivo de datos que está ahí, está en formato de stata,  ``.dta''. Cree una medida de la tasa de inversión y una medida de q de Tobin: la medida de la tasa de inversión puede ser el gasto en capital (capx) sobre el capital (ppen), o la tasa de cambio en el capital (\%$\Delta$ ppen), o la tasa de cambio de los activos (\%$\Delta$ta). **
+
+### (d)
+**Cree una medida de la ``Q'': el  valor de mercado de la empresa sobre el valor en libros de la empresa, en donde el valor de mercado es es número de acciones por el precio de la acción.**
+
+### (e)
+**Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo y la ``Q' en el mismo y también de una relación utilizando la ``Q'' del periodo inmediato anterior. **
+
+### (f)
+**Produzca un estimado del coeficiente del costo de ajuste a partir de las regresiones anteriores.** 
+
+### (g)
+**Explique, suponiendo que la función de costo de ajuste es cuadrática (es decir $C_t=b(I_t/K_t)^2K_t $), qué implican los resultados de sus regresiones sobre el costo de ajuste relativo al capital total para una inversión de 50\% del capital total y qué implican los resultados para el tiempo que le tomaría a una empresa recorrer la mitad mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$.**
+
+### (h)
+**Simule una relación lineal $Y=a+bX+\epsilon$ y cree tres variables con error de medición $\tilde{X}=X+\epsilon^x$, $\tilde{\tilde{X}}=X-c  \cdot {\epsilon}$ y  $\tilde{Y}=Y+\epsilon^y$. (Es decir, primero invéntese una variable, X, genere una variable $\epsilon$ aleatoria y con esas dos genere una variable Y. Luego genere dos nuevas X's, una afectada aleatoriamente por otro error diferente, $\epsilon^x$, y otra afectada, de manera NEGATIVA, por el mismo error que incluy'o en la simulación de la Y original, y tercero, genere una nueva Y que esté afectada por una tercera variable aleatoria $\epsilon^Y$.  Finalmente, estime varias relaciones lineales:  la de la $Y$ original, con la $X$ original, la de $Y$ original, pero contra $\tilde{X}$ y $\tilde{\tilde{X}}$ y la de $\tilde{Y}$ con la $X$ original, explicando como cambia el coeficiente $\hat{b}$ en cada caso, y relacionándo sus hayazgos con el coeficiente $b$ del inciso anterior.**
+
+### (i)
+**Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.**
+
+
+## Ejercicio 4.-
+**Proponga una mejora al archivo Diccionario de Economía utilizando github.**
+
