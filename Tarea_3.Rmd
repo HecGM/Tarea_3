@@ -136,16 +136,117 @@ and labor:$Y=K^{\alpha}L^{1- \alpha},0<\alpha<1$. Suppose that the firm’s pric
 
 
 # Ejercicios prácticos
+ 
 
+```{r}
+pacman::p_load(tidyverse,
+               ggthemes,
+               haven, readxl,
+               kableExtra, ggfortify,
+               cowplot, ggplot2, scales, viridis, latticeExtra,
+               knitr, tinytex, reshape, lubridate, scales, reshape2, seasonal, plm, latex2exp, tibble,Hmisc, zoo)
+
+
+
+```
 ## Ejercicio 2.-
 **Estudie los determinantes de la inversión agregada en México siguiendo estos pasos:**
 
 ### (a)
 **Obtenga, del Inegi, datos DESESTACIONALIZADOS para México del consumo "C", datos de "I", la inversión privada (inversión fija bruta), y de "Y", el PIB, entre 1980 y 2021/IV, A FRECUENCIA TRIMESTRAL, EN TÉRMINOS REALES y grafique las tres series. (Si encuentra varias series pero ninguna cubre el periodo completo, tome una decisión ejecutiva para "unir" las series.)**
+```{r, echo=FALSE, fig.cap="Ingreso, Inversión y Consumo (1980-2021)", fig.pos="H"}
+##Cargamos las base de datos del PIB, elaboramos la tasa de crecimiento(sig. inciso) y un indice para graficarla.
+df_Y <- read.csv("PIB.csv", header = FALSE)
+names(df_Y) <- c("Fecha", "Y")
+df_Y$Fecha <- as.yearqtr(df_Y$Fecha, "%Y/%q")
+ano_base <- df_Y[133,2]
+df_Y <- df_Y %>% mutate(gr=(Y/Lag(Y,shift=1)-1)) %>%
+  mutate(Indice_Y=((Y/ano_base)*100)) %>%
+  filter(!row_number() %in% 1)
 
+
+##Cargamos las bases de Formación Fija Bruta y a partir de ella obtenemos los valores de crecimiento para establecer un indice.
+FBKF1 <- read.csv("FOrmacion80_92.csv", header=FALSE)
+names(FBKF1) <- c("Fecha","FBKF")
+FBKF1$Fecha <- as.yearqtr(FBKF1$Fecha, "%Y/%q")
+gr1 <- FBKF1 %>% mutate(gr= (FBKF/Lag(FBKF,shift = 1)-1))%>%
+  filter(!row_number() %in% 1)
+
+FBKF2 <- read.csv("FOrmacion93_21.csv", header=FALSE)
+names(FBKF2) <- c("Fecha","FBKF")
+FBKF2$Fecha <- as.yearqtr(FBKF2$Fecha, "%Y/%q")
+gr2 <- FBKF2 %>% mutate(gr= (FBKF/Lag(FBKF,shift = 1)-1))%>%
+  filter(!row_number() %in% 1)
+
+gr1<- bind_rows(gr1,gr2[-c(81:115),])
+gr1 <- gr1%>%arrange(desc(Fecha))
+gr1$Indice_I[1] <- 100
+for(i in 2:132){
+ gr1$Indice_I[i] <- (gr1$Indice_I[i-1]/(1+gr1$gr[i]))
+}
+gr1 <- gr1%>%arrange(Fecha)%>%
+  filter(!row_number() %in% 132)
+
+gr2 <- gr2[c(80:115),]
+gr2$Indice_I[1] <- 100
+for(i in 2:36){
+ gr2$Indice_I[i] <- ((1+gr2$gr[i])*gr2$Indice_I[i-1])
+}
+
+df_I<- bind_rows(gr1,gr2)
+
+
+##Cargamos las baeses de Consumo y procedemos a elaborar su indice apartir de las tasas de crecimiento
+cons1 <- read.csv("Consumo80_92.csv", header=FALSE)
+names(cons1) <- c("Fecha", "C")
+cons1$Fecha <- as.yearqtr(cons1$Fecha, "%Y/%q")
+gr3 <- cons1 %>% mutate(gr= (C/Lag(C,shift = 1)-1))%>%
+  filter(!row_number() %in% 1)
+
+cons2 <- read.csv("Consumo93_21.csv", header=FALSE)
+names(cons2) <- c("Fecha", "C")
+cons2$Fecha <- as.yearqtr(cons2$Fecha, "%Y/%q")
+gr4 <- cons2 %>% mutate(gr= (C/Lag(C,shift = 1)-1))%>%
+  filter(!row_number() %in% 1)
+
+gr3<- bind_rows(gr3,gr4[-c(81:115),])
+gr3 <- gr3%>%arrange(desc(Fecha))
+gr3$Indice_C[1] <- 100
+for(i in 2:132){
+ gr3$Indice_C[i] <- (gr3$Indice_C[i-1]/(1+gr3$gr[i]))
+}
+gr3 <- gr3%>%arrange(Fecha)%>%
+  filter(!row_number() %in% 132)
+
+gr4 <- gr4[c(80:115),]
+gr4$Indice_C[1] <- 100
+for(i in 2:36){
+ gr4$Indice_C[i] <- ((1+gr4$gr[i])*gr4$Indice_C[i-1])
+}
+
+df_C<- bind_rows(gr3,gr4)
+
+
+##Realizamos un data.frame para graficar
+table2_a <- data.frame(Fecha=df_Y$Fecha,Indice_Y=df_Y$Indice_Y,Indice_I=df_I$Indice_I,Indice_C=df_C$Indice_C)
+table2_a <- melt(table2_a, id.vars = "Fecha")
+plot2_a <- ggplot(table2_a, aes(x=Fecha, y=value ,colour=variable,group=variable))+
+  geom_line() + 
+  labs(title = "Ingreso, Inversión y Consumo (1980-2021)", x="Año",y='Indice', 
+      colour = " ") + theme_bw() +  theme(text=element_text(size=12,  family="serif"))
+plot(plot2_a)
+
+```
 ### (b)
 **Grafique la relación entre los cambios de I y los de Y, es decir, grafique los puntos ($\% \Delta Y_{t}$,$\% \Delta I_{t}$) poniendo la inversión en el eje de las ordenadas.**
-
+```{r, echo=FALSE, fig.cap="Variación porcentual (I~Y)", fig.pos="H"}
+table2_b <- data.frame(Fecha=df_Y$Fecha,gr_Y=df_Y$gr,gr_I=df_I$gr)
+plot2_b <- ggplot()+
+  geom_line(data=table2_b, aes(x=gr_Y,y=gr_I), color = "#990066", alpha=0.5, size= .5)+
+  labs(title = "Variación porcentual (I~Y)", x="Variación Y",y="Variación I")+
+  theme_bw()
+plot(plot2_b)
+```
 ### (c)
 **Calcule la volatilidad de cada serie y la covarianza entre las tres series de tasas de crecimiento ($\% \Delta {I}$, $\% \Delta C$ y $\% \Delta Y$),  describa cuál es más volátil y cuales cambios, si los de I o los de C están más relacionados con los de Y.**
 
