@@ -144,7 +144,8 @@ pacman::p_load(tidyverse,
                haven, readxl,
                kableExtra, ggfortify,
                cowplot, ggplot2, scales, viridis, latticeExtra,
-               knitr, tinytex, reshape, lubridate, scales, reshape2, seasonal, plm, latex2exp, tibble,Hmisc, zoo)
+               knitr, tinytex, reshape, lubridate, scales, reshape2, seasonal, plm, latex2exp, tibble,Hmisc, zoo,
+               dynlm)
 
 
 
@@ -240,7 +241,7 @@ plot(plot2_a)
 ### (b)
 **Grafique la relación entre los cambios de I y los de Y, es decir, grafique los puntos ($\% \Delta Y_{t}$,$\% \Delta I_{t}$) poniendo la inversión en el eje de las ordenadas.**
 ```{r, echo=FALSE, fig.cap="Variación porcentual (I~Y)", fig.pos="H"}
-table2_b <- data.frame(Fecha=df_Y$Fecha,gr_Y=df_Y$gr,gr_I=df_I$gr)
+table2_b <- data.frame(Fecha=df_Y$Fecha,gr_Y=(df_Y$gr*100),gr_I=(df_I$gr*100), gr_C=(df_C$gr*100))
 plot2_b <- ggplot()+
   geom_line(data=table2_b, aes(x=gr_Y,y=gr_I), color = "#990066", alpha=0.5, size= .5)+
   labs(title = "Variación porcentual (I~Y)", x="Variación Y",y="Variación I")+
@@ -249,10 +250,73 @@ plot(plot2_b)
 ```
 ### (c)
 **Calcule la volatilidad de cada serie y la covarianza entre las tres series de tasas de crecimiento ($\% \Delta {I}$, $\% \Delta C$ y $\% \Delta Y$),  describa cuál es más volátil y cuales cambios, si los de I o los de C están más relacionados con los de Y.**
+```{r, echo=FALSE, fig.cap="Tasas de crecimiento(1980-2021)", fig.pos="H"}
+table2_b <- melt(table2_b, id.vars = "Fecha")
+plot2_c <- ggplot(table2_b, aes(x=Fecha, y=value ,colour=variable,group=variable))+
+  geom_line() + 
+  labs(title = "Tasas de crecimiento(1980-2021)", x="Año",y='Valor', 
+      colour = " ") + theme_bw() +  theme(text=element_text(size=12,  family="serif"))
+plot(plot2_c)
 
+vol_Y <- sd(df_Y$gr, na.rm = T)
+vol_I <- sd(df_I$gr, na.rm = T)
+vol_C <- sd(df_C$gr, na.rm = T)
+d1 <- c(vol_Y, vol_I, vol_C)
+d2 <- c("Y", "I", "C")
+table2_c <- data.frame(d2,d1)
+names(table2_c) <- c("Variable", "Volatilidad")
+knitr::kable(table2_c,booktabs = TRUE, format = 'latex', caption = "Volatilidad", longtable = F)%>% 
+  kable_styling(latex_options = "HOLD_position")
+```
+adajsdhasd
+adshjad
+```{r, echo=FALSE}
+mat2_c <- as.matrix(data.frame((df_Y$gr*100), (df_I$gr*100), (df_C$gr*100)))
+table2_c2 <- as.data.frame(cov(mat2_c))
+names(table2_c2) <- c("Y", "I", "C")
+rownames(table2_c2) <- c("Y", "I", "C")
+knitr::kable(table2_c2,booktabs = TRUE, format = 'latex', caption = "Covarianza", longtable = F)%>% 
+  kable_styling(latex_options = "HOLD_position")
+```
 ### (d)
 **Obtenga, del Banco de México, datos sobre las tasas de interés reales ($r^{r}$) de la economía $r^{r}=r^{n}-\pi$, es decir, la tasa de interés nominal, menos la tasa de inflación esperada (en cuyo caso se trata de la tasa de interés real "ex-ante"), o menos la tasa de inflación observada (en cuyo caso se trata de la "ex-post") y grafíquelas.**
+```{r, echo=FALSE, fig.cap="Tasas de interés e Inflación(1985-2021)", fig.pos="H"}
+##Cargamos las base de datos para la tasa de interés
+int <- read.csv("Tasa_de_interes.csv", header=FALSE)
+int <- int %>% filter(!row_number() %in% c(1:353))%>%
+  select(1,2)%>%
+  setNames(., c("Fecha", "Int_d"))%>%
+  mutate(Int_d = as.numeric(Int_d))
+int$Fecha <- as.yearqtr(int$Fecha, "%d/%m/%Y")
+int <- int %>% group_by(Fecha) %>% 
+  summarise(Int_d, Int_q = mean(Int_d), .groups = 'drop')%>%
+  distinct(Fecha, .keep_all = TRUE)%>%
+  filter(!row_number() %in% c(149:150))
 
+##Cargamos la base de datos para la inflación
+inf <- read.csv("Inflacion.csv", header = FALSE)
+inf <- inf %>% filter(!row_number() %in% c(1:29))%>%
+  select(1,4)%>% 
+  setNames(., c("Fecha", "Inf_m"))%>%
+  mutate(Inf_m = as.numeric(Inf_m))
+inf$Fecha <- as.yearqtr(inf$Fecha, "%d/%m/%Y")
+inf <- inf %>% group_by(Fecha) %>% 
+  summarise(Inf_m, Inf_q = mean(Inf_m), .groups = 'drop')%>%
+  distinct(Fecha, .keep_all = TRUE)%>%
+  filter(!row_number() %in% c(1:8,149))
+
+##Calculamos la tasa de interés real
+table2_d <- int %>% add_column(pi=inf$Inf_q)%>%
+  mutate(r=Int_q-pi)%>%
+  select(1,3,4,5)%>%
+  setNames(., c("Fecha","i","pi","r"))
+table2_d <- melt(table2_d, id.vars = "Fecha")
+plot2_d <- ggplot(table2_d, aes(x=Fecha, y=value ,colour=variable,group=variable))+
+  geom_line() + 
+  labs(title = "Tasas de interés e Inflación(1985-2021)", x="Año",y='Valor', 
+      colour = " ") + theme_bw() +  theme(text=element_text(size=12,  family="serif"))
+plot(plot2_d)
+```
 ### (e)
 **Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables.**
 
@@ -288,7 +352,7 @@ plot(plot2_b)
 **Explique, suponiendo que la función de costo de ajuste es cuadrática (es decir $C_t=b(I_t/K_t)^2K_t $), qué implican los resultados de sus regresiones sobre el costo de ajuste relativo al capital total para una inversión de 50\% del capital total y qué implican los resultados para el tiempo que le tomaría a una empresa recorrer la mitad mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$.**
 
 ### (h)
-**Simule una relación lineal $Y=a+bX+\epsilon$ y cree tres variables con error de medición $\tilde{X}=X+\epsilon^x$, $\tilde{\tilde{X}}=X-c  \cdot {\epsilon}$ y  $\tilde{Y}=Y+\epsilon^y$. (Es decir, primero invéntese una variable, X, genere una variable $\epsilon$ aleatoria y con esas dos genere una variable Y. Luego genere dos nuevas X's, una afectada aleatoriamente por otro error diferente, $\epsilon^x$, y otra afectada, de manera NEGATIVA, por el mismo error que incluy'o en la simulación de la Y original, y tercero, genere una nueva Y que esté afectada por una tercera variable aleatoria $\epsilon^Y$.  Finalmente, estime varias relaciones lineales:  la de la $Y$ original, con la $X$ original, la de $Y$ original, pero contra $\tilde{X}$ y $\tilde{\tilde{X}}$ y la de $\tilde{Y}$ con la $X$ original, explicando como cambia el coeficiente $\hat{b}$ en cada caso, y relacionándo sus hayazgos con el coeficiente $b$ del inciso anterior.**
+**Simule una relación lineal $Y=a+bX+\epsilon$ y cree tres variables con error de medición $\tilde{X}=X+\epsilon^x$, $\tilde{\tilde{X}}=X-c  \cdot {\epsilon}$ y  $\tilde{Y}=Y+\epsilon^y$. (Es decir, primero invéntese una variable, X, genere una variable $\epsilon$ aleatoria y con esas dos genere una variable Y. Luego genere dos nuevas X's, una afectada aleatoriamente por otro error diferente, $\epsilon^x$, y otra afectada, de manera NEGATIVA, por el mismo error que incluy'o en la simulación de la Y original, y tercero, genere una nueva Y que esté afectada por una tercera variable aleatoria $\epsilon^Y$.  Finalmente, estime varias relaciones lineales:  la de la $Y$ original, con la $X$ original, la de $Y$ original, pero contra $\tilde{X}$ y $\tilde{\tilde{X}}$ y la de $\tilde{Y}$ con la $X$ original, explicando como cambia el coeficiente $\hat{b}$ en cada caso, y relacionándo sus hallazgos con el coeficiente $b$ del inciso anterior.**
 
 ### (i)
 **Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.**
