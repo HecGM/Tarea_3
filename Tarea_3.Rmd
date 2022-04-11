@@ -21,6 +21,7 @@ header-includes:
 - \usepackage{float}
 - \usepackage{lscape}
 - \usepackage{amsmath}
+- \usepackage{wrapfig}
 ---
 
 \newpage
@@ -43,95 +44,197 @@ knitr::opts_chunk$set(
 
 \newpage
 
-# Preguntas teóricas
-**Resuelva los ejercicios 9.1, 9.4, 9.8 y 9.11 (5a edición). Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX.**
+## Ejercicio 1 
 
-## Ejercicio 9.1, Romer (5ta Edicion)
+Resuelva los ejercicios 9.1, 9.4 y 9.7 (5a edición). Realice estos con ayuda de su laboratorista y entregue las soluciones escritas a máquina, utilizando LaTeX. [3 horas,0.5 punto cada inciso]
 
-\begin{enumerate}
-\item[] \textbf{9.1} Consider a firm that produces output using a Cobb Douglas combination of capital
-and labor:$Y=K^{\alpha}L^{1- \alpha},0<\alpha<1$. Suppose that the firm’s price is fixed in the short run; thus it takes both the price of its product, $P$ , and the quantity, $Y$, as given. Input markets are competitive; thus the firm takes the wage, $W$, and the rental price of capital, $r_{K}$, as given.
-\end{enumerate}
+### Romer 9.1
 
-### (a)
-\begin{enumerate}
-\item[] \textit{What is the firm’s choice of $L$ given $P$ , $Y$, $W$, and $K$?}
-\end{enumerate}
+Considere una empresa que produce utilizando una combinación de capital y trabajo Cobb Douglas: $$Y=K^{\alpha}L^{1-\alpha}, 0<\alpha<1$$ Suponga que el precio de la empresa es fijo a corto plazo; por lo tanto, toma tanto el precio de su producto, P, como la cantidad, Y , como dadas. Los mercados de insumos son competitivos; así, la empresa toma el salario, W, y el precio de alquiler del capital, $r_K$, como dados
 
-### (b)
-\begin{enumerate}
-\item[] \textit{Given this choice of $L$, what are profits as a function of $P$, $Y$, $W$, and $K$?}
-\end{enumerate}
+(a) ¿Cuál es la elección de la empresa de L dado P, Y , W y K? 
+Dada K y la cantidad demandada fija, Y, la empresa contratará suficiente mano de obra para satisfacer esa demanda.
+Dada la función de producción $Y = K^{\alpha}L^{1-\alpha}$, la empresa contratará: 
+ $$L = Y^{1/(1-\alpha)}K^{-\alpha/(1-\alpha)}$$
+ 
+(b) Dada esta elección de L, ¿cuáles son los beneficios en función de P, Y , W y K?
+Sustituyendo la elección de L por parte de la empresa en la función de beneficio, $\pi = PY - WL - r_K K$, tenemos:
+$$\pi=PY- W[Y^{1/(1-\alpha)}K^{-\alpha/(1-\alpha)}] -r_k K$$
 
-### (c)
-\begin{enumerate}
-\item[] \textit{Find the first-order condition for the profit-maximizing choice of $K$. Is the second-order condition satisfied?}
-\end{enumerate}
+(c) Encuentre la condición de primer orden para la elección de K que maximiza los beneficios. ¿Se cumple la condición de segundo orden?
 
-### (d)
-\begin{enumerate}
-\item[] \textit{Solve the first-order condition in part (c) for $K$ as a function of $P$ , $Y$, $W$, and $r_{K}$. How, if at all, do changes in each of these variables affect $K$?}
-\end{enumerate}
+La condición de primer orden para la elección de K por parte de la empresa es
+
+$$\frac{\delta\pi}{\delta\ K}= \frac{\alpha}{1-\alpha} WY^{1/(1-\alpha)} K^{[-\alpha/(1-\alpha)]-1}-r_K = 0,$$
+$$\Rightarrow \frac{\alpha}{1-\alpha} WY^{1/(1-\alpha)} K^{-1/(1-\alpha)} = r_K$$
+
+Para saber si es un máximo, obtenemos la segunda derivada 
+
+$$ \frac{\delta^2 \pi}{\delta K^2}= \left[ \frac{-1}{1-\alpha}\right] \frac{\alpha}{1-\alpha} WY^{1/(1-\alpha)} K^{(\alpha-2)/(1-\alpha)} < 0 $$
+
+Como la segunda derivada es negativa, efectivamente tenemos un máximo, y, por lo tanto, se satisface la condición de segundo orden. 
+
+(d) Resuelva la condición de primer orden en el inciso c) para K en función de P, Y , W y $r_K$. ¿Cómo, si es que lo hacen, los cambios en cada una de estas variables afectan a K?
+
+$$\frac{\alpha}{1-\alpha} WY^{1/(1-\alpha)} K^{-1/(1-\alpha)} = r_K  \Rightarrow \frac{\alpha}{1-\alpha} \frac{WY^{1/(1-\alpha)}}{r_K}=  K^{1/(1-\alpha)}$$
+$$ \Rightarrow \left[\frac{\alpha}{1-\alpha} \frac{WY^{1/(1-\alpha)}}{r_K}\right]^{(1-\alpha)}= \left[K^{1/(1-\alpha)}\right]^{1-\alpha}$$
+$$\Rightarrow K= Y \left(\frac{\alpha}{1-\alpha}\right)^{1-\alpha}\left( \frac{W}{r_K}\right)^{1-\alpha}$$
+
+Como podemos ver, los cambios en el precio del producto de la empresa no afectan directamente la elección de K que maximiza las ganancias, aunque los cambios en P probablemente afecten a Y. 
+
+En cuanto a los efectos de las variables en K, la elasticidad de K con respecto al salario, W, es $(1 -\alpha)$, que es positivo. La  elasticidad de K con respecto al precio de alquiler del capital, rK , por otro lado, es $(\alpha - 1)$, que es negativa y finalmente, la elasticidad de K con respecto a la cantidad demandada es uno.
+
+### Romer  9.4
+
+Construyendo la intuición sobre la condición de transversalidad. Considere a un individuo que elige el camino de G para maximizar
+$\int_{t=0}^{\infty} e^{-\rho t} \left[ -\frac{a}{2} G(t)^2\right]dt, a>0, \rho>0.$ Aquí G(t) es la cantidad de basura que crea el individuo en el tiempo t; por simplicidad, admitimos la posibilidad de que G pueda ser negativo. La creación de basura por parte del individuo afecta su stock de basura. En particular, el stock de basura, T, evoluciona de acuerdo a $T(0) = 0, \dot{T}(t) = G(t)$.
+
+(a) Demuestre usando la menor cantidad de matemáticas posible que la ruta de maximización de la utilidad es G(t) = 0 para todo t.
+
+Ya que la función a integrar o el integrando es negativo para todo valor de $G(t) \neq cero$, el máximo de esta función se alcanzará cuando $G(t)= cero$ para toda t. 
+
+(b) Supongamos que queremos analizar este problema utilizando el cálculo de variaciones. Sea G la variable de control y T la variable de estado, y sea $\mu$ la variable de costo. ¿Cuál es el hamiltoniano de valor actual?
+
+$$H[G(t), T(t), \lambda(t)] \equiv e^{-\rho t} \left( -\frac{a}{2}G(t)^2\right) + \lambda(t)G(t) \hspace{0.3cm} s.a. \hspace{0.3cm} \dot{T}= G(t) \hspace{0.3cm} con \hspace{0.3cm} T(0)=0 $$
+
+(c) Encuentre las condiciones de optimalidad distintas de la condición de transversalidad. Describa las trayectorias de G que satisfacen esas condiciones.
+
+- (1) $\frac{dH()}{dG(t)}=0$
+$$ e^{-\rho t}(-aG(t))+ \lambda(t) =0$$
+$$ \Rightarrow \lambda(t) = ae^{-\rho T} G(t)$$
+
+- (2) $\frac{dH()}{dT(t)}= -\frac{d\lambda}{dt}$
+$$ 0= -\frac{d\lambda}{dt}$$
+
+- (3) $\frac{dT(t)}{dt}= G(T)$ con $T(0)= 0$ 
+
+De (2) obtenemos que: $$\frac{d\lambda}{dt} = 0 \Rightarrow \lambda(t)= A$$
+Introducimos este resultado en (1):
+$$ \lambda(t)= ae^{-\rho t} G(t) \Rightarrow A= ae^{-\rho t} G(t)$$
+$$ \Rightarrow G(t) = \frac{A}{a} e^{\rho t}$$
+Este valor de G(t) los sustituimos en (3):
+$$ \frac{\partial T(t)}{\partial t} = G(T) \Rightarrow \frac{\partial T(t)}{\partial t}= \frac{A}{a} e^{\rho t}$$
+$$\Rightarrow T(t) = \int\frac{A}{a} e^{\rho t} dt \Rightarrow T(t) = \frac{A}{a} \left[ \frac{1}{\rho}\int \rho e^{\rho t} dt \right]$$
+$$ \Rightarrow T(t) = \frac{A}{a\rho} e^{\rho t} + C$$
+
+Con T(0)=0 
+
+$$ \frac{A}{a\rho} e^{\rho (0)} + C= 0 \Rightarrow \frac{A}{a\rho} e^{\rho (0)} + C=0 $$
+$$\Rightarrow \frac{A}{a\rho}= -C $$
+
+(d) ¿Cuál es la condición de transversalidad? Demuestra que descarta todos menos uno de los caminos que encontraste en el inciso (c), y que el único camino restante es el que mostraste en el inciso (a) como óptimo: G(t) = 0 para todo t.
+
+La condición de transversalidad es: $\lim_{t\to\infty} T(t)=0$
+
+$$\lim\limits_{t\to\infty} T(t)= \lim\limits_{t\to\infty} \left(\frac{A}{a\rho} e^{\rho t} + C \right) = 0  \Rightarrow \lim\limits_{t\to\infty} T(t) = \lim\limits_{t\to\infty} \frac{A}{a\rho} e^{\rho t} + \lim\limits_{t\to\infty} C =0 $$
+$$ \Rightarrow \lim\limits_{t\to\infty} T(t) = \lim\limits_{t\to\infty} -Ce^{\rho t} + C=0$$ 
+$$ \Rightarrow \lim\limits_{t\to\infty} T(t) = \lim\limits_{t\to\infty} C(1- e^{\rho t})=0$$
+
+Esta condición se cumple si C=0 o $1-e^{\rho t}=0$ (donde t tiene que ser igual a cero también). 
+
+Con C=0, $A/a\rho=0 \Rightarrow A=0$ (ya que $\alpha$>0 y $\rho$>0 ), tenemos: 
+$$ G(t) = \frac{0}{a} e^{\rho t}=0 \hspace{0.3 cm}\forall \hspace{0.3 cm} t$$
+
+(e) Explique en una oración o dos por qué las soluciones en c) distintas de G(t) = 0 para todo t parecen maximizar la utilidad si no se considera la condición de transversalidad, y por qué la condición de transversalidad los excluye.
+
+Sin la condición de transversalidad, $G(t) = A/a\rho e^{\rho t} +C$ será siempre positivo para cualquier t, lo que indica que siempre será óptimo para el individuo generar basura adicional, es decir, que el individuo podría generar basura en cantidades ilimitadas y esto no implicara ningún costo; sin embargo, con la condición de trasversalidad se restringe esta posibilidad para encontrarnos en el óptimo mencionado desde el primer inciso con G(t) =0. 
+
+### Romer 9.8
+
+Considere el modelo de inversión en las Secciones 9.2-9.5. Supongamos que se sabe en alguna fecha que habrá un gravamen de capital por única vez. Específicamente, los tenedores de capital pagarán impuestos por una cantidad igual a la fracción f del valor de sus tenencias de capital en algún momento en el futuro, tiempo T. Suponga que la economía está inicialmente en equilibrio a largo plazo. ¿Qué sucede en el momento de esta noticia? ¿Cómo se comportan K y q entre el momento de la noticia y el momento en que se impone el gravamen? ¿Qué sucede con K y q en el momento del gravamen? ¿Cómo se comportan a partir de entonces? (Sugerencia: ¿Se prevé que q cambie de forma discontinua en el momento del gravamen?)
 
 
+\begin{wrapfigure}{l}{0.5\linewidth}
+	\caption{Los efectos de un impuesto transitorio}
+	\centering
+	\includegraphics[width=1\linewidth]{problema 9.8.png}
+	
+\end{wrapfigure}
 
-## Ejercicio 9.4, Romer (5ta Edicion)
+Con el anuncio del impuesto cae el valor del capital (q), sin embargo, debido a los costes de ajuste, el stock de capital no cambia en ese momento, generándose un salto discontinuo de q, hasta encontrarnos en un punto como A. Con la caída de q, el valor de capital es menor a 1, provocando que el capital disminuya paulatinamente hasta el punto B, momento donde se realiza el gravamen. 
 
-\begin{enumerate}
-\item[] \textbf{9.4}Building intuition concerning the transversality condition. Consider an individual choosing the path of $G$ to maximize $\int_{t=0}^{\infty}e^{-\rho t}\left[- \frac{a}{2}G(t)^{2} \right]dt,a>0,\rho>0$. Here $G(t)$ is the amount of garbage the individual creates at time t; for simplicity, we allow for the possibility that $G$ can be negative. The individual’s creation of garbage affects his or her stock of trash. In particular, the stock of trash, $T$, evolves according to $T=0,\dot{T}(t)=G(t)$
-\end{enumerate}
+Ahora, hagamos la distinción entre el valor de q (valor de mercado del capital) en el momento T-1 (un instante antes del gravamen o antes de B) y en el momento T+1 (un instante después del gravamen o después de B).  El punto clave es que el valor de mercado del capital un instante antes del gravamen, q(T - 1), debe ser igual a (1 - f) veces el valor de mercado del capital un instante después del gravamen, q(T+1). Si no fuera así, a la luz del gravamen, los titulares de acciones de empresas esperarían pérdidas de capital que podrían evitar. Por lo tanto, q(T – 1)=(1 - f)q(T + 1) o $\frac{q(T - 1)}{q(T + 1)}= (1 - f)$.
 
-### (a)
-\begin{enumerate}
-\item[] \textit{Prove using as little math as possible that the utility-maximizing path is $G(t) = 0 \quad \forall t$.}
-\end{enumerate}
+Por ejemplo, si f = 0.20 o diez por ciento, entonces el valor de q un instante antes del gravamen, q(T-1) debe ser igual al 80 por ciento de su valor un instante después del gravamen, q(t+1). Por lo tanto, en el tiempo T, q salta discontinuamente para cerrar esa brecha del 20 por ciento, este salto es el descrito por la grafica entre el punto B al punto C. Además, ese salto debe poner a la economía en la senda de equilibrio para que vuelva a su punto de equilibrio estable (punto E). 
 
-### (b)
-\begin{enumerate}
-\item[] \textit{Suppose we want to analyze this problem using the calculus of variations. Let $G$ be the control variable and $T$ the state variable, and let $\mu$ denote the costate variable. What is the current-value Hamiltonian?}
-\end{enumerate}
-
-### (c)
-\begin{enumerate}
-\item[] \textit{Find the conditions for optimality other than the transversality condition. Describe the paths of $G$ that satisfy those conditions.}
-\end{enumerate}
-
-### (d)
-\begin{enumerate}
-\item[] \textit{What is the transversality condition? Show that it rules out all but one of the paths you found in part (c), and that the one remaining path is the one that you showed in part (a) to be optimal: $G(t) = 0 \quad \forall t$.}
-\end{enumerate}
-
-### (e)
-\begin{enumerate}
-\item[] \textit{Explain in a sentence or two why the solutions in (c) other than $G(t) = 0 \quad \forall t$ look as if they are utility-maximizing if one does not consider the transversality condition, and why the transversality condition rules them out.}
-\end{enumerate}
+En resumen, al darse a conocer la noticia, q salta hacia abajo, poniendo la economía en un punto como A. La economía se encuentra entonces en una región donde tanto q como K están cayendo. Así, entre el momento de la noticia y el momento en que se impone el impuesto, el valor de mercado del capital y el stock de capital están cayendo. Las empresas comienzan a desacumular capital en previsión del gravamen único. 
 
 
-
-## Ejercicio 9.8, Romer (5ta Edicion)
-
-\begin{enumerate}
-\item[] \textbf{9.8}Consider the model of investment in Sections 9.2 9.5. Suppose it becomes known at some date that there will be a one-time capital levy. Specifically, capital holders will be taxed an amount equal to fraction $f$ of the value of their capital holdings at some time in the future, time $T$. Assume the economy is initially in long-run equilibrium. What happens at the time of this news? How do $K$ and $q$ behave between the time of the news and the time the levy is imposed? What happens to $K$ and $q$ at the time of the levy? How do they behave thereafter? (Hint: Is $q$ anticipated to change discontinuously at the time of the levy?)
-\end{enumerate}
+Es importante resaltar que el punto A debe elegirse de modo que, al llegar al momento del gravamen (B), q pueda saltar en la cantidad requerida discutida anteriormente $\frac{q(T - 1)}{q(T + 1)}= (1 - f)$ y ese salto requerido debe poner a la economía en la senda de equilibrio. Como sabemos, por los costes de ajuste, el stock de capital no salta en el momento del gravamen. Así, en el momento T, o B en nuestro gráfico, la economía salta de este punto, a un punto como C donde $\frac{q(B)}{q(C)}= (1 - f)$. 
+En el punto C, tenemos una q>1, el valor del capital es alto, por lo que incentiva la inversión y la acumulación de capital, así, el stock de capital comienza a aumentar de nuevo hasta llegar a nuestro punto de equilibrio original E. 
 
 
+### Romer 9.11
 
-## Ejercicio 9.11, Romer (5ta Edicion)
+Supongamos que $\pi(K)=a-bK$ y $C(I)=\alpha\frac{I^2}{2}$
 
-\begin{enumerate}
-\item[] \textbf{9.11} Suppose that $\pi(K)=a-bK$ and $C(I)=\alpha I^{2}/2$
-\end{enumerate}
+(a) ¿Cuál es el lugar geométrico $\dot{q}= 0$? ¿Cuál es el valor de equilibrio a largo plazo de K?
 
-### (a)
-\begin{enumerate}
-\item[] \textit{What is the $\dot{q} = 0$ locus? What is the long-run equilibrium value of $K$?}
-\end{enumerate}
+Sabemos que una de las condiciones para la optimización es que el ingreso marginal del capital, $\pi(K(t))$, sea igual a su costo de uso, $rq(t)- \dot{q}(t)$. Reorganizar esta condición nos da la siguiente ecuación de movimiento para q:
+$$\dot{q}(t) = rq(t) - \pi(K(t))$$
+Sustituyendo la función de beneficio, $\pi(K) = a - bK$, en la ecuación anterior tenemos:
+$$\dot{q}(t) = rq(t) - a + bK(t)   \hspace{1cm} (1)$$
+Por lo tanto, el lugar geométrico $\dot{q} = 0$ viene dado por
+$$rq - a + bK = 0$$
+o despejando q en función de K, tenemos
+$$q = \frac{(a - bK)}{r}$$
 
-### (b)
-\begin{enumerate}
-\item[] \textit{What is the slope of the saddle path? (Hint: Use the approach in Section 2.6.)}
-\end{enumerate}
+Entonces, el lugar geométrico $\dot{q}= 0$ tiene una pendiente constante de $-b/r$.
 
+
+Para encontrar el valor de equilibrio a largo plazo de K, necesitamos encontrar la intersección del lugar geométrico $\dot{q} = 0$  y $\dot{K}= 0$. El lugar geométrico $\dot{K}= 0$ está dado por q = 1, lo que significa que ya sabemos que el valor de equilibrio a largo plazo de q, q* es uno. Sustituyendo q = 1 en $q = (a - bK)/r$ y resolviendo para K* nos da que el valor de equilibrio de largo plazo para K es:
+$$K^* = \frac{(a - r)}{b} \hspace{1cm} (2)$$
+
+(b) ¿Cuál es la pendiente del camino de la silla? (Sugerencia: Utilice el enfoque de la Sección 2.6.)
+
+Para encontrar la pendiente de la trayectoria de la senda de crecimiento (camino de silla), primero necesitamos resolver la ecuación de movimiento de K(t). Una de las condiciones para la optimización es que cada empresa invierta hasta el punto en que el precio de compra del capital (que asumimos como uno), más el costo marginal de ajuste, sea igual al valor del capital, q. Asimismo, asumimos costos de ajuste cuadráticos, $C(\dot{\kappa}) = \alpha\dot{\kappa}^2/2$, por lo que el costo marginal de ajuste es $\delta C(\dot{\kappa}))/\delta\dot{\kappa}= \alpha\dot{\kappa}$.
+
+Con esta información tenemos que $q=1+\alpha\dot{\kappa}$, si despejamos para $\dot{\kappa}$ obtenemos:
+$$ \dot{\kappa}=(q-1)/\alpha$$ 
+
+Dado que q es el mismo para todas las empresas, todas las empresas eligen el mismo valor de inversión, $\dot{\kappa}$. Así, la tasa de cambio del stock de capital agregado,$\dot{K}$, está dada por:
+$$\dot{K}=N(q-1)/\alpha  \hspace{1cm}  (3)$$
+donde N es el número de empresas.
+
+Definimos $\tilde{q}\equiv q-q^*$ y $\tilde{K}\equiv K- K^*$. Dado que q* y K* son constantes, $\dot{q}$ y $\dot{K}$ son equivalentes a $\dot{\tilde{q}}$ y $\dot{\tilde{K}}$ respectivamente. Asimismo, podemos reexpresar las ecuaciones (1), (2) y (3) como: 
+ $$\dot{\tilde{q}}= rq-a+bK \hspace{1cm} (4)$$ 
+ $$ bK = b\tilde{K}+a-r \hspace{1cm} (5)$$
+ $$\dot{\tilde{K}}= N(q-1)/\alpha \hspace{1cm} (6)$$ 
+
+Dividiendo ambos lados de la ecuación (3) por $\tilde{q}$ y sustituyendo la ecuacion (5) tenemos:
+$$\frac{\dot{\tilde{q}}}{\tilde{q}} = \frac{rq-a+b\tilde{K}+a-r}{\tilde{q}}=\frac{r(q-1)}{\tilde{q}}+\frac{b\tilde{K}}{\tilde{q}}=r+b\frac{\tilde{K}}{\tilde{q}} \hspace{1cm} (7)$$  
+donde q* = 1 de modo que $\tilde{q}\equiv q-q^*=q-1$
+
+Dividiendo ambos lados de la ecuación (6) por $\tilde{K}$ y notando que q*=1 tenemos:
+$$\frac{\dot{\tilde{K}}}{\dot{\tilde{K}}} = \frac{N}{\alpha} \frac{\tilde{q}}{\tilde{K}}  \hspace{1cm}  (8)$$
+
+Estas ultimas dos ecuaciones implican que las tasas de crecimiento de $\tilde{q}$ y $\tilde{K}$ dependen solo de la relación entre estas. Si $\tilde{q}$ y $\tilde{K}$ están cayendo al mismo ritmo. Esto implica que la razón de $\tilde{q}$ a $\tilde{K}$ no está cambiando y, por lo tanto, sus tasas de crecimiento tampoco. En términos de un diagrama de fase, desde un punto en el que $\tilde{q}$ y $\tilde{K}$ están cayendo a tasas iguales, la economía simplemente se mueve a lo largo de senda de equilibrio, en línea recta hacia (K*, q*) con su distancia cayendo a una tasa constante.
+
+Ahora, denotamos $\frac{\dot{\tilde{K}}}{\tilde{K}}$ como $\mu$ y re expresamos la última ecuación como 
+$$\mu= \frac{N}{\alpha}\frac{\tilde{q}}{\tilde{K}} \hspace{1cm} o \hspace{1cm} \frac{\tilde{q}}{\tilde{K}}= \frac{\alpha \mu}{N}$$
+
+Sustituyendo estos valores en la ecuacion (7) tenemos:
+
+$$\mu = r+(bN/\alpha\mu)) \hspace{1cm} o \hspace{1cm} \alpha\mu^2 - \alpha r\mu - bN=0$$
+
+Resolvemos con la formula general para $\mu$:
+
+$$\mu= \frac{\alpha r \pm\sqrt{\alpha^2 r^2 + 4\alpha bN }}{2\alpha}= \frac{r \pm\sqrt{r^2 + (4bN/\alpha)}}{2}$$
+
+Si $\mu$ es positivo, entonces $\tilde{q}(t)\equiv q(t)-q^*$ y $\tilde{K}(t)\equiv K(t)-K^*$ están creciendo. Es decir, en lugar de moverse a lo largo de una línea recta hacia (K*, q*), la economía se aleja del equilibrio. Por lo tanto, $\mu$ debe ser negativo, es decir, solo nos quedaremos con la solución:
+
+$$ \mu = \frac{r - \sqrt{r^2 + (4bN/\alpha)}}{2}$$
+
+Sustituimos esta ecuacion en $\tilde{q}/\tilde{K}= \alpha \mu/N$ para saber como deben estar relacionadas q y K en la senda de equilibrio y despejamos para q: 
+
+$$\frac{\tilde{q}}{\tilde{K}} \equiv \frac{q- q^*}{K-K^*} =  \frac{\alpha\left[ r-\sqrt{r^2 +(4bN/\alpha)}\right]}{2N} \iff $$
+$$ q=q^* + \alpha \left[ \frac{\left[ r-\sqrt{r^2 +(4bN/\alpha)}\right]}{2N}\right] (K-K^*) $$
+
+Derivamos para encontrar finalmente la pendiente de la senda de equilibrio:
+
+$$\frac{\delta q}{\delta K}=\alpha\left[\frac{r-\sqrt{r^2+ (4\alpha bN)/\alpha}}{2N}\right] < 0 $$ 
+
+que sabemos es negativa por la condición de $\mu$ acotada anteriormente. 
 
 
 
