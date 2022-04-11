@@ -528,7 +528,20 @@ mod23 <- dynlm(gr_I ~ gr_Y + r + conf_c, data=table2_f)
 mod24 <- dynlm(gr_I ~ gr_Y + r + conf_e, data=table2_f)
 mod25 <- dynlm(gr_I ~ gr_Y + r + conf_c + conf_e, data=table2_f)
 
-stargazer(mod19,mod20,mod21,mod22,mod23,mod24,mod25, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos 2",header = FALSE, omit.stat = c("f", "ser"))
+stargazer(mod19,mod20,mod21,mod22,mod23,mod24,mod25, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t}$","$confE_{t}$","Intercepto"))
+```
+
+```{r, results='asis'}
+##Modelos múltiples
+mod26 <- dynlm(gr_I ~ L(conf_c,1) + L(conf_e,1), data=table2_f)
+mod27 <- dynlm(gr_I ~ gr_Y + L(conf_c,1), data=table2_f)
+mod28 <- dynlm(gr_I ~ gr_Y + L(conf_e,1), data=table2_f)
+mod29 <- dynlm(gr_I ~ gr_Y + L(conf_c,1) + L(conf_e,1), data=table2_f)
+mod30 <- dynlm(gr_I ~ gr_Y + r + L(conf_c,1), data=table2_f)
+mod31 <- dynlm(gr_I ~ gr_Y + r + L(conf_e,1), data=table2_f)
+mod32 <- dynlm(gr_I ~ gr_Y + r + L(conf_c,1) + L(conf_e,1), data=table2_f)
+
+stargazer(mod26,mod27,mod28,mod29,mod30,mod31,mod32, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezago 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t-1}$","$confE_{t-1}$","Intercepto"))
 ```
 
 ### (g)
