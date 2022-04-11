@@ -24,16 +24,16 @@
 \contentsline {subsubsection}{(c)}{7}{section*.24}%
 \contentsline {subsubsection}{(d)}{7}{section*.25}%
 \contentsline {subsubsection}{(e)}{8}{section*.26}%
-\contentsline {subsubsection}{(f)}{8}{section*.27}%
-\contentsline {subsubsection}{(g)}{8}{section*.28}%
-\contentsline {subsection}{Ejercicio 3.-}{8}{section*.29}%
-\contentsline {subsubsection}{(a)}{8}{section*.30}%
+\contentsline {subsubsection}{(f)}{9}{section*.27}%
+\contentsline {subsubsection}{(g)}{9}{section*.28}%
+\contentsline {subsection}{Ejercicio 3.-}{9}{section*.29}%
+\contentsline {subsubsection}{(a)}{9}{section*.30}%
 \contentsline {subsubsection}{(b)}{9}{section*.31}%
 \contentsline {subsubsection}{(c)}{9}{section*.32}%
 \contentsline {subsubsection}{(d)}{9}{section*.33}%
 \contentsline {subsubsection}{(e)}{9}{section*.34}%
-\contentsline {subsubsection}{(f)}{9}{section*.35}%
-\contentsline {subsubsection}{(g)}{9}{section*.36}%
-\contentsline {subsubsection}{(h)}{9}{section*.37}%
+\contentsline {subsubsection}{(f)}{10}{section*.35}%
+\contentsline {subsubsection}{(g)}{10}{section*.36}%
+\contentsline {subsubsection}{(h)}{10}{section*.37}%
 \contentsline {subsubsection}{(i)}{10}{section*.38}%
 \contentsline {subsection}{Ejercicio 4.-}{10}{section*.39}%
