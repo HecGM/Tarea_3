@@ -236,7 +236,7 @@ $$\frac{\delta q}{\delta K}=\alpha\left[\frac{r-\sqrt{r^2+ (4\alpha bN)/\alpha}}
 
 que sabemos es negativa por la condición de $\mu$ acotada anteriormente. 
 
-
+\newpage
 
 # Ejercicios prácticos
  
@@ -422,7 +422,7 @@ plot(plot2_d)
 ```
 ### (e)
 **Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables.**
-```{r, include=TRUE, results='asis'}
+```{r, echo=FALSE}
 #Unificamos las baeses de datos a usar para las regresiones
 table2_b <- table2_b %>% add_column(df_Y$Y, .after= "Fecha")
 ts1 <- ts(table2_b, frequency=4, start = c(1980,02))
@@ -438,7 +438,7 @@ table2_e <- ts(table2_e, frequency = 4, start = c(1980,02))
 mod1 <- dynlm(gr_I ~ Y, data=table2_e) 
 mod2 <- dynlm(gr_I ~ gr_Y, data=table2_e)
 mod3 <- dynlm(gr_I ~ r, data = table2_e)
-stargazer(mod1,mod2,mod3, dep.var.labels="$grI_{t}$", title="Regresiones de $grI_{t}$ ",header = FALSE, omit.stat = c("f", "ser"))
+stargazer(mod1,mod2,mod3, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ ",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"))
 ```
 
 ```{r, results='asis'}
@@ -446,6 +446,7 @@ stargazer(mod1,mod2,mod3, dep.var.labels="$grI_{t}$", title="Regresiones de $grI
 mod4 <- dynlm(gr_I ~ L(Y,1), data=table2_e)
 mod5 <- dynlm(gr_I ~ L(gr_Y,1), data=table2_e)
 mod6 <- dynlm(gr_I ~ L(gr_I,1), data = table2_e)
+stargazer(mod4,mod5,mod6, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_{t-1}$","$grY_{t-1}$","$grI_{t-1}$","Intercepto"))
 ```
 
 ```{r, results='asis'}
@@ -454,6 +455,7 @@ mod7 <- dynlm(gr_I ~ Y + r, data = table2_e)
 mod8 <- dynlm(gr_I ~ gr_Y + r, data = table2_e)
 mod9 <- dynlm(gr_I ~ Y + gr_Y, data = table2_e)
 mod10 <- dynlm(gr_I ~ Y + r + gr_Y, data = table2_e)
+stargazer(mod7,mod8,mod9,mod10, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"))
 ```
 
 ```{r, results='asis'}
@@ -463,17 +465,45 @@ mod12 <- dynlm(gr_I ~ r +L(gr_I,1), data = table2_e)
 mod13 <- dynlm(gr_I ~ gr_Y + r+ L(gr_I,1), data= table2_e)
 mod14 <- dynlm(gr_I ~ L(gr_Y,1) + r+ L(gr_I,1), data= table2_e)
 
+stargazer(mod11,mod12,mod13,mod14, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$","$grY_{t-1}$","$r_{t}$","$grI_{t-1}$","Intercepto"))
 
-##stargazer(mod1,mod2,mod3,mod4, dep.var.labels="$grI_{t}$", title="Regresiones de $Tcinv_t$ ",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$Y_{t-1}$","$r_{t}$","$grI_{t-1}$","Intercepto"))
 ```
-\newpage
+
 
 ### (f)
 **Estime otra serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$: a las especificaciones del inciso anterior, agregue valores corrientes y/o rezagados de {\it la confianza empresarial} del Inegi y de {\it la confianza del consumidor} elaborado por el Inegi y el Banco de México.**
 ```{r, echo=FALSE}
 ##Cargamos las bases de datos de la confianza del consumidor y del productor
+con_c <- read.csv("conf_c.csv", header = FALSE)
+con_c$V1<- as.yearqtr(con_c$V1, "%Y/%m")
+con_c <- con_c %>%setNames(., c("Fecha", "conf_cm"))%>%
+  group_by(Fecha) %>% 
+  summarise(conf_cm, conf_c= mean(conf_cm), .groups = 'drop')%>%
+  distinct(Fecha, .keep_all = TRUE)%>%
+  filter(!row_number() %in% c(84:85))%>%
+  select(1,3)
 
+con_e <- read.csv("conf_e.csv", header = FALSE)
+con_e$V1<- as.yearqtr(con_e$V1, "%d/%m/%Y")
+con_e <- con_c %>%select(1,2)%>%
+  setNames(., c("Fecha", "conf_em"))%>%
+  group_by(Fecha) %>% 
+  summarise(conf_em, conf_e= mean(conf_em), .groups = 'drop')%>%
+  distinct(Fecha, .keep_all = TRUE)%>%
+  select(1,3)
+
+ts3 <- ts(con_c, frequency=4, start = c(2001,02))
+ts4 <- ts(con_e, frequency=4, start = c(2001,02))
+table2_f <- as.data.frame(ts.union(table2_e,ts3,ts4))
+table2_f <- table2_f %>% subset.matrix(.,TRUE,-c(9,11)) %>%
+  set_colnames(c("Fecha","Y","gr_Y", "gr_I", "gr_C" , "i","pi","r", "conf_c", "conf_e"))
+table2_f <- ts(table2_f, frequency = 4, start = c(1980,02))
 ```
+
+```{r}
+
+
+``` 
 ### (g)
 **Interprete los resultados.** 
 
