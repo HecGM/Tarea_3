@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.11)  11 APR 2022 12:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.11)  11 APR 2022 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -462,6 +462,15 @@ LaTeX Warning: Label `' multiply defined.
 
 LaTeX Warning: Label `' multiply defined.
 
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
 )
 \openout1 = `Tarea_3.aux'.
 
@@ -605,7 +614,7 @@ LaTeX Info: Redefining \% on input line 1.
 \openout6 = `Tarea_3.lot'.
 
 [2] [3] [4]
-<problema 9.8.png, id=209, 455.301pt x 389.0535pt>
+<problema 9.8.png, id=215, 455.301pt x 389.0535pt>
 File: problema 9.8.png Graphic file (type png)
 <use problema 9.8.png>
 Package pdftex.def Info: problema 9.8.png  used on input line 374.
@@ -616,12 +625,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has
                                                   \__shipout_drop_firstpage_...
 l.443 ... = 0\) viene dado por \[rq - a + bK = 0\]
                                                    o <./problema 9.8.png>] [7] [8]
-<Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf, id=236, 505.89pt x 216.81pt>
+<Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf, id=242, 505.89pt x 216.81pt>
 File: Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 571.
 (pdftex.def)             Requested size: 469.76265pt x 201.32684pt.
-<Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf, id=237, 505.89pt x 216.81pt>
+<Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf, id=243, 505.89pt x 216.81pt>
 File: Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 587.
@@ -632,7 +641,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has
                                                   \__shipout_drop_firstpage_...
 l.593 
        <./Tarea_3_files/figure-latex/unnamed-chunk-2-1.pdf>]
-<Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf, id=251, 505.89pt x 216.81pt>
+<Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf, id=257, 505.89pt x 216.81pt>
 File: Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 604.
@@ -653,7 +662,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has 
                                                   \__shipout_drop_firstpage_...
 l.640 \end{table}
                   <./Tarea_3_files/figure-latex/unnamed-chunk-3-1.pdf> <./Tarea_3_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf, id=270, 505.89pt x 216.81pt>
+<Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf, id=276, 505.89pt x 216.81pt>
 File: Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 <use Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 654.
@@ -662,51 +671,66 @@ Package pdftex.def Info: Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf  used 
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                   
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                    <./Tarea_3_files/figure-latex/unnamed-chunk-6-1.pdf>] [12
 pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                   
 pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                   ] [13
 pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                   
 pdfTeX warning (ext4): destination with the same identifier (name{table.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.822 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+                                                  ] [14
+pdfTeX warning (ext4): destination with the same identifier (name{table.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
+                                                  
+pdfTeX warning (ext4): destination with the same identifier (name{table.8}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.918 ...tion{Ejercicio 3.-}\label{ejercicio-3.-}}
                                                   ]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 838.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 934.
 (c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 838.
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 838.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 934.
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 934.
 (c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TS1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TS1/lmtt/b/n' tried instead on input line 838.
-
-Overfull \hbox (41.43797pt too wide) in paragraph at lines 889--890
+(Font)              Font shape `TS1/lmtt/b/n' tried instead on input line 934.
+[15
+pdfTeX warning (ext4): destination with the same identifier (name{table.9}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.954 
+      ]
+Overfull \hbox (41.43797pt too wide) in paragraph at lines 985--986
 []\T1/lmr/bx/n/10 Explique, su-po-nien-do que la fun-ción de cos-to de ajus-te es cua-drá-ti-ca (es de-cir $C_t=b(I_t/K_t)^^B2K_t
  []
 
-[14] [15] (./Tarea_3.aux
+[16] [17] (./Tarea_3.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
@@ -717,18 +741,18 @@ Package rerunfilecheck Info: File `Tarea_3.out' has not changed.
 (rerunfilecheck)             Checksum: 965B39E284B2915C3CEF06BB35D3D4BD;2570.
  ) 
 Here is how much of TeX's memory you used:
- 14302 strings out of 480210
- 228251 string characters out of 5893135
- 574092 words of memory out of 5000000
+ 14307 strings out of 480210
+ 228286 string characters out of 5893135
+ 593091 words of memory out of 5000000
  31905 multiletter control sequences out of 15000+600000
  504485 words of font info for 54 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,11n,63p,288b,430s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}<c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb>
-Output written on Tarea_3.pdf (16 pages, 351769 bytes).
+Output written on Tarea_3.pdf (18 pages, 354781 bytes).
 PDF statistics:
- 399 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 94 named destinations out of 1000 (max. 500000)
+ 414 PDF objects out of 1000 (max. 8388607)
+ 352 compressed objects within 4 object streams
+ 99 named destinations out of 1000 (max. 500000)
  247 words of extra memory for PDF output out of 10000 (max. 10000000)
 
