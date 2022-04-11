@@ -542,3 +542,14 @@ table2_f <- ts(table2_f, frequency = 4, start = c(1980,02))
 ## Ejercicio 4.-
 **Proponga una mejora al archivo Diccionario de Economía utilizando github.**
 
+
+**Formación Bruta de Capital fijo**: Indicador que mide las variaciones, es decir, las adiciones (adquisiciones) menos las disposiciones (ventas) de activos fijos o bienes duraderos, realizadas por los productores de un cierto territorio durante un período determinado, más los incrementos de valor de los activos no producidos pero que se derivan también de la actividad productiva. 
+
+**Inversión de cartera**: Inversión de posición minoritaria que implican títulos de deuda o de participación en el capital, distintos a los incluidos en la inversión directa o activos de reserva. En este tipo de inversiones extranjeras el objetivo no es el control sobre la gestión de una empresa sino solo los rendimientos generados mediante la percepción de ingresos financieros, la repartición de utilidades o las ganancias de capital.
+
+**Inversión Extranjera Directa**: Categoría de inversión extranjera que involucra la transferencia de capital de entidades económicas de un país hacia otro, con el objetivo de establecer ahí empresas o filiales, así como adquirir u obtener una participación relevante en empresas extranjeras para su control. Esta operación involucra una relación de largo plazo, pues el inversor directo busca obtener una participación duradera en la empresa o entidad extranjera, en este sentido, la inversión extranjera directa (IED) implica que el inversor pretende ejercer un grado significativo de influencia o control en el manejo sobre la unidad de producción. 
+
+
+
+
+
