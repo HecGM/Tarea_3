@@ -258,6 +258,18 @@ pacman::p_load(tidyverse,
 
 ### (a)
 **Obtenga, del Inegi, datos DESESTACIONALIZADOS para México del consumo "C", datos de "I", la inversión privada (inversión fija bruta), y de "Y", el PIB, entre 1980 y 2021/IV, A FRECUENCIA TRIMESTRAL, EN TÉRMINOS REALES y grafique las tres series. (Si encuentra varias series pero ninguna cubre el periodo completo, tome una decisión ejecutiva para "unir" las series.)**
+
+Obtenemos las series del INEGI desestacionalizadas a precios del 2013 de indicadores económicos de coyuntura del BIE, sin embargo la Inversión Fija Bruta y el Consumo solo los encontramos hasta 1993. Procedimos a realizar una búsqueda en series que no se actualizan donde encontramos el consumo a precios de 1993 de 1980 al 2007. En el caso de la Inversión Fija Bruta encontramos la serie de Formación Bruta de Capital Fijo, la cual es la IFB en millones de pesos.
+Teniendo ambas series decidimos unirlas mediante sus tasas de crecimiento, perdiendo solo el valor del primer trimestre de 1980. 
+
+En este ejercicio elaboramos un indice con base en el primer trimestre de 2013 para poder graficar en un mismo plano las 3 series, el del PIB fue elaborado sin problemas, ya que poseemos todos los valores en la serie original. Para elaborar los otros dos indices seguimos la siguiente formula:
+
+Antes del año base: $Y_{t}=(Y_{t+1})/(1+ \Delta Y_{t})$
+
+Después del año base: $Y_{t+1}=(1+\Delta Y_{t})Y_{t}$
+
+Donde: $Y_{t}$ es la variable en el periodo $t$ y $\Delta Y_{t}$ tasa de crecimiento de la variable en el periodo $t$.
+
 ```{r, echo=FALSE, fig.cap="Ingreso, Inversión y Consumo (1980-2021)", fig.pos="H"}
 ##Cargamos las base de datos del PIB, elaboramos la tasa de crecimiento(sig. inciso) y un indice para graficarla.
 df_Y <- read.csv("PIB.csv", header = FALSE)
@@ -341,18 +353,21 @@ plot2_a <- ggplot(table2_am, aes(x=Fecha, y=value ,colour=variable,group=variabl
 plot(plot2_a)
 
 ```
+\newpage
 ### (b)
 **Grafique la relación entre los cambios de I y los de Y, es decir, grafique los puntos ($\% \Delta Y_{t}$,$\% \Delta I_{t}$) poniendo la inversión en el eje de las ordenadas.**
 ```{r, echo=FALSE, fig.cap="Variación porcentual (I~Y)", fig.pos="H"}
 table2_b <- data.frame(Fecha=df_Y$Fecha,gr_Y=(df_Y$gr*100),gr_I=(df_I$gr*100), gr_C=(df_C$gr*100))
 plot2_b <- ggplot()+
-  geom_line(data=table2_b, aes(x=gr_Y,y=gr_I), color = "#990066", alpha=0.5, size= .5)+
-  labs(title = "Variación porcentual (I~Y)", x="Variación Y",y="Variación I")+
+  geom_point(data=table2_b, aes(x=gr_Y,y=gr_I), color = "#990066", alpha=0.5, size= .5)+
+  labs(title = "Variación porcentual (I~Y)", x="grY",y="grI")+
   theme_bw()
 plot(plot2_b)
 ```
 ### (c)
 **Calcule la volatilidad de cada serie y la covarianza entre las tres series de tasas de crecimiento ($\% \Delta {I}$, $\% \Delta C$ y $\% \Delta Y$),  describa cuál es más volátil y cuales cambios, si los de I o los de C están más relacionados con los de Y.**
+
+Graficamos primero las tasas de crecimiento de las tres variables a lo largo del periodo.
 ```{r, echo=FALSE, fig.cap="Tasas de crecimiento(1980-2021)", fig.pos="H"}
 table2_bm <- melt(table2_b, id.vars = "Fecha")
 plot2_c <- ggplot(table2_bm, aes(x=Fecha, y=value ,colour=variable,group=variable))+
@@ -360,7 +375,11 @@ plot2_c <- ggplot(table2_bm, aes(x=Fecha, y=value ,colour=variable,group=variabl
   labs(title = "Tasas de crecimiento(1980-2021)", x="Año",y='Valor', 
       colour = " ") + theme_bw() +  theme(text=element_text(size=12,  family="serif"))
 plot(plot2_c)
+```
 
+Ya podemos apreciar que la tasa más constante a lo largo del periodo observado es el consumo, mientras que la Inversión sigue a pasos agigantados los movimientos del Producto.
+
+```{r, echo=FALSE}
 vol_Y <- sd(df_Y$gr, na.rm = T)
 vol_I <- sd(df_I$gr, na.rm = T)
 vol_C <- sd(df_C$gr, na.rm = T)
@@ -371,8 +390,9 @@ names(table2_c) <- c("Variable", "Volatilidad")
 knitr::kable(table2_c,booktabs = TRUE, format = 'latex', caption = "Volatilidad", longtable = F)%>% 
   kable_styling(latex_options = "HOLD_position")
 ```
-adajsdhasd
-adshjad
+
+En el cuadro 1 se puede apreciar mejor lo anterior, la variable con crecimiento más volatil es la inversión, seguida del Producto y por último el consumo.
+
 ```{r, echo=FALSE}
 mat2_c <- as.matrix(data.frame((df_Y$gr*100), (df_I$gr*100), (df_C$gr*100)))
 table2_c2 <- as.data.frame(cov(mat2_c))
@@ -381,8 +401,17 @@ rownames(table2_c2) <- c("Y", "I", "C")
 knitr::kable(table2_c2,booktabs = TRUE, format = 'latex', caption = "Covarianza", longtable = F)%>% 
   kable_styling(latex_options = "HOLD_position")
 ```
+
+Se puede ver en el cuadro 2 que $cov(grI,grY)>cov(grC,grY)$, lo cual la inversión es más sensible a los cambios del producto que el consumo. Esto se puede deber a que los agentes basan su consumo en su ingreso permanente y estos shocks solo los absorben en menor medida, es decir suavizan su consumo.
+
+
 ### (d)
 **Obtenga, del Banco de México, datos sobre las tasas de interés reales ($r^{r}$) de la economía $r^{r}=r^{n}-\pi$, es decir, la tasa de interés nominal, menos la tasa de inflación esperada (en cuyo caso se trata de la tasa de interés real "ex-ante"), o menos la tasa de inflación observada (en cuyo caso se trata de la "ex-post") y grafíquelas.**
+
+Para la tasa de interés nominal tomamos los cetes 28 quincenal, como están anualizados obtenemos un promedio trimestral para que nuestras fechas coincidan.
+
+Para la inflación utilizaremos una ex-post, es decir, una que ya fue observada, tomamos la inflación no subyacente mensual, esta considera los precios de energéticos. Decidimos esta variable porque las decisiones de inversión también dependen de los costos de producción (por ejemplo gasolina). Esta serie también se encuentra anualizada, por lo que sacamos su promedio en trimestres.
+
 ```{r, echo=FALSE, fig.cap="Tasas de interés e Inflación(1985-2021)", fig.pos="H"}
 ##Cargamos las base de datos para la tasa de interés
 int <- read.csv("Tasa_de_interes.csv", header=FALSE)
@@ -420,6 +449,7 @@ plot2_d <- ggplot(table2_dm, aes(x=Fecha, y=value ,colour=variable,group=variabl
       colour = " ") + theme_bw() +  theme(text=element_text(size=12,  family="serif"))
 plot(plot2_d)
 ```
+
 ### (e)
 **Estime una serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$. Utilice valores corrientes y rezagados del crecimiento en el producto, de la tasa de interés real, valores rezagados de la propia tasa de cambio en la inversión y combinaciones de estas variables.**
 ```{r, echo=FALSE}
@@ -433,33 +463,44 @@ table2_e <- table2_e %>% subset.matrix(.,TRUE,-6) %>%
 table2_e <- ts(table2_e, frequency = 4, start = c(1980,02))
 ```
 
+Vamos a estimar 4 tipos de regresiones: el primer tipo son modelos simples de una variable, el segundo son modelos simples de una variables rezagadas, el tercero son modelos de varias variables sin rezago y el cuarto son modelos múltiples con reszagos.
+
 ```{r, results='asis'}
 ##Estimamos modelos simples
-mod1 <- dynlm(gr_I ~ Y, data=table2_e) 
+mod1 <- dynlm(gr_I ~ log(Y), data=table2_e) 
 mod2 <- dynlm(gr_I ~ gr_Y, data=table2_e)
 mod3 <- dynlm(gr_I ~ r, data = table2_e)
 
-stargazer(mod1,mod2,mod3, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ ",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"))
+stargazer(mod1,mod2,mod3, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ ",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+De estas 3 primeras regresiones podemos ver que la mejor es la regresión de $\Delta I_{t}= \alpha + \beta \Delta Y_{t}$, tiene mejor capacidad explicativa y mejor estimador beta.
+
 
 ```{r, results='asis'}
 ##Modelos simples con rezagos
-mod4 <- dynlm(gr_I ~ L(Y,1), data=table2_e)
+mod4 <- dynlm(gr_I ~ L(log(Y),1), data=table2_e)
 mod5 <- dynlm(gr_I ~ L(gr_Y,1), data=table2_e)
 mod6 <- dynlm(gr_I ~ L(gr_I,1), data = table2_e)
 
-stargazer(mod4,mod5,mod6, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_{t-1}$","$grY_{t-1}$","$grI_{t-1}$","Intercepto"))
+stargazer(mod4,mod5,mod6, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_{t-1}$","$grY_{t-1}$","$grI_{t-1}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+De estos modelos ninguno posee una capacidad explicativa considerable, todos tienen $R^{2}$ muy bajas.
+
 
 ```{r, results='asis'}
 ##Modelos múltiples 
-mod7 <- dynlm(gr_I ~ Y + r, data = table2_e)
+mod7 <- dynlm(gr_I ~ log(Y) + r, data = table2_e)
 mod8 <- dynlm(gr_I ~ gr_Y + r, data = table2_e)
-mod9 <- dynlm(gr_I ~ Y + gr_Y, data = table2_e)
-mod10 <- dynlm(gr_I ~ Y + r + gr_Y, data = table2_e)
+mod9 <- dynlm(gr_I ~ log(Y) + gr_Y, data = table2_e)
+mod10 <- dynlm(gr_I ~ log(Y) + r + gr_Y, data = table2_e)
 
-stargazer(mod7,mod8,mod9,mod10, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"))
+stargazer(mod7,mod8,mod9,mod10, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$Y_t$","$grY_{t}$","$r_{t}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+En estos el mejor modelo por su capacidad explicativa resulta ser $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} r_{t}$, se escoge este porque el $log(Y_{t})$ es una variable que no aporta mucho a su capacidad explicativa.
+
 
 ```{r, results='asis'}
 ##Modelos múltiples con rezagos
@@ -468,12 +509,17 @@ mod12 <- dynlm(gr_I ~ r + L(gr_I,1), data = table2_e)
 mod13 <- dynlm(gr_I ~ gr_Y + r + L(gr_I,1), data= table2_e)
 mod14 <- dynlm(gr_I ~ L(gr_Y,1) + r + L(gr_I,1), data= table2_e)
 
-stargazer(mod11,mod12,mod13,mod14, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$","$grY_{t-1}$","$r_{t}$","$grI_{t-1}$","Intercepto"))
+stargazer(mod11,mod12,mod13,mod14, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezagos",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$","$grY_{t-1}$","$r_{t}$","$grI_{t-1}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+Para estos modelos dejamos de utilizar la variable $log(Y_{t})$, puesto que ha resultado poco relevante en el resto de modelos. Vemos que la inclusión de la variable $\Delta I_{t-1}$ en el modelo anterior mejora marginalmente $R^{2}$. Sin embargo, también hace que sea menos relevante la tasa de interés real $r_{t}$ estadísticamente, además de que reduce $Ajusted \, R^{2}$ en comparación de cuando no se utiliza dicha variable.
 
 
 ### (f)
 **Estime otra serie de modelos lineales con el objetivo de averiguar qué variables predicen la tasa de crecimiento de la inversión $\Delta$\%$I_t$: a las especificaciones del inciso anterior, agregue valores corrientes y/o rezagados de {\it la confianza empresarial} del Inegi y de {\it la confianza del consumidor} elaborado por el Inegi y el Banco de México.**
+
+Obtenemos la confianza del consumidor desde el 4 mes de 2004, y la del productor utilizamos la de manufacturas, ya que empieza desde el 4 mes del 2004 también. igual que en los incisos anteriores pasamos las series a trimestes para poder comparar la información.
+
 ```{r, echo=FALSE}
 ##Cargamos las bases de datos de la confianza del consumidor y del productor
 con_c <- read.csv("conf_c.csv", header = FALSE)
@@ -502,21 +548,27 @@ table2_f <- table2_f %>% subset.matrix(.,TRUE,-c(9,11)) %>%
 table2_f <- ts(table2_f, frequency = 4, start = c(1980,02))
 ```
 
+En este ejercicio igual estimaremos 4 tipos de modelos: simples sin y con rezagos; y múltiples sin y con rezagos. Empezamos los primeros con las variables $confC_{t}$ y $confE_{t}$ que corresponden a la confianza del consumidor y a la del productor respectivamente, utilizamos las variables que mejor explicaron $\Delta I_{t}$ en el inciso anterior.
+
 ```{r, results='asis'}
 ##Modelos simples
 mod15 <- dynlm(gr_I ~ conf_c, data=table2_f)
 mod16 <- dynlm(gr_I ~ conf_e, data=table2_f)
 
-stargazer(mod15,mod16, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$confC_{t}$","$confE_{t}$","Intercepto"))
+stargazer(mod15,mod16, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$confC_{t}$","$confE_{t}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ``` 
+
+Vemos que ninguno de estos modelos tiene buena capacidad explicativa.
 
 ```{r, results='asis'}
 ##Modelos simples con rezagos
 mod17 <- dynlm(gr_I ~ L(conf_c,1), data=table2_f)
 mod18 <- dynlm(gr_I ~ L(conf_e,1), data=table2_f)
 
-stargazer(mod17,mod18, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$confC_{t-1}$","$confE_{t-1}$","Intercepto"))
+stargazer(mod17,mod18, dep.var.labels="$grI_{t}$", title="Regresiones simples de $grI_{t}$ con rezagos 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$confC_{t-1}$","$confE_{t-1}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+En entre estos modelos también vemos que carecen de gran capacidad explicativa.
 
 ```{r, results='asis'}
 ##Modelos múltiples
@@ -528,8 +580,10 @@ mod23 <- dynlm(gr_I ~ gr_Y + r + conf_c, data=table2_f)
 mod24 <- dynlm(gr_I ~ gr_Y + r + conf_e, data=table2_f)
 mod25 <- dynlm(gr_I ~ gr_Y + r + conf_c + conf_e, data=table2_f)
 
-stargazer(mod19,mod20,mod21,mod22,mod23,mod24,mod25, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t}$","$confE_{t}$","Intercepto"))
+stargazer(mod19,mod20,mod21,mod22,mod23,mod24,mod25, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t}$","$confE_{t}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+Vemos que los modelos $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} confC_{t}$ y $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} r_{t} + \beta_{3}confC_{t}$ son los que poseen mejor capacidad explicativa, pero el estimador de $confC_{t}$ no es estadísticamente significativo, y al introducirlo $r_[t]$ tampoco lo es, por lo cual es mejor si no consideramos estas variables.
 
 ```{r, results='asis'}
 ##Modelos múltiples
@@ -541,13 +595,17 @@ mod30 <- dynlm(gr_I ~ gr_Y + r + L(conf_c,1), data=table2_f)
 mod31 <- dynlm(gr_I ~ gr_Y + r + L(conf_e,1), data=table2_f)
 mod32 <- dynlm(gr_I ~ gr_Y + r + L(conf_c,1) + L(conf_e,1), data=table2_f)
 
-stargazer(mod26,mod27,mod28,mod29,mod30,mod31,mod32, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezago 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t-1}$","$confE_{t-1}$","Intercepto"))
+stargazer(mod26,mod27,mod28,mod29,mod30,mod31,mod32, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ con rezago 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t-1}$","$confE_{t-1}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
+
+Igual que en la serie de la serie anterior es mejor si nos quedamos con el modelo $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} r_{t}$, ya que incluso con rezago el estimador de $r_{t}$ pierde relevancia estadística. 
 
 ### (g)
 **Interprete los resultados.** 
 
 
+
+\newpage
 ## Ejercicio 3.-
 **Estudie la habilidad de modelo de la $q$ de Tobin para explicar las tasas de inversión de empresas individuales, siguiendo estos pasos:**
 

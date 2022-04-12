@@ -9,20 +9,20 @@
 \contentsline {section}{Ejercicios prácticos}{9}{section*.9}%
 \contentsline {subsection}{Ejercicio 2.-}{9}{section*.10}%
 \contentsline {subsubsection}{(a)}{9}{section*.11}%
-\contentsline {subsubsection}{(b)}{9}{section*.12}%
+\contentsline {subsubsection}{(b)}{10}{section*.12}%
 \contentsline {subsubsection}{(c)}{10}{section*.13}%
 \contentsline {subsubsection}{(d)}{11}{section*.14}%
-\contentsline {subsubsection}{(e)}{11}{section*.15}%
-\contentsline {subsubsection}{(f)}{11}{section*.16}%
-\contentsline {subsubsection}{(g)}{16}{section*.17}%
-\contentsline {subsection}{Ejercicio 3.-}{16}{section*.18}%
-\contentsline {subsubsection}{(a)}{16}{section*.19}%
-\contentsline {subsubsection}{(b)}{16}{section*.20}%
-\contentsline {subsubsection}{(c)}{16}{section*.21}%
-\contentsline {subsubsection}{(d)}{16}{section*.22}%
-\contentsline {subsubsection}{(e)}{16}{section*.23}%
-\contentsline {subsubsection}{(f)}{16}{section*.24}%
-\contentsline {subsubsection}{(g)}{17}{section*.25}%
-\contentsline {subsubsection}{(h)}{17}{section*.26}%
-\contentsline {subsubsection}{(i)}{17}{section*.27}%
-\contentsline {subsection}{Ejercicio 4.-}{17}{section*.28}%
+\contentsline {subsubsection}{(e)}{12}{section*.15}%
+\contentsline {subsubsection}{(f)}{14}{section*.16}%
+\contentsline {subsubsection}{(g)}{17}{section*.17}%
+\contentsline {subsection}{Ejercicio 3.-}{18}{section*.18}%
+\contentsline {subsubsection}{(a)}{18}{section*.19}%
+\contentsline {subsubsection}{(b)}{18}{section*.20}%
+\contentsline {subsubsection}{(c)}{18}{section*.21}%
+\contentsline {subsubsection}{(d)}{18}{section*.22}%
+\contentsline {subsubsection}{(e)}{18}{section*.23}%
+\contentsline {subsubsection}{(f)}{18}{section*.24}%
+\contentsline {subsubsection}{(g)}{18}{section*.25}%
+\contentsline {subsubsection}{(h)}{19}{section*.26}%
+\contentsline {subsubsection}{(i)}{19}{section*.27}%
+\contentsline {subsection}{Ejercicio 4.-}{19}{section*.28}%
