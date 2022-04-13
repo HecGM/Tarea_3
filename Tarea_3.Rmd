@@ -241,14 +241,15 @@ que sabemos es negativa por la condición de $\mu$ acotada anteriormente.
 # Ejercicios prácticos
  
 
-```{r}
+```{r paqueterias}
 pacman::p_load(tidyverse,
                ggthemes,
                haven, readxl,
                kableExtra, ggfortify,
                cowplot, ggplot2, scales, viridis, latticeExtra,
                knitr, tinytex, reshape, lubridate, scales, reshape2, seasonal, plm, latex2exp, tibble,Hmisc, zoo,
-               dynlm, magrittr, stargazer)
+               dynlm, magrittr, stargazer,xtable,
+               rsq, MASS,jtools)
 
 
 
@@ -417,7 +418,7 @@ Para la inflación utilizaremos una ex-post, es decir, una que ya fue observada,
 ##Cargamos las base de datos para la tasa de interés
 int <- read.csv("Tasa_de_interes.csv", header=FALSE)
 int <- int %>% filter(!row_number() %in% c(1:353))%>%
-  select(1,2)%>%
+  dplyr::select(1,2)%>%
   setNames(., c("Fecha", "Int_d"))%>%
   mutate(Int_d = as.numeric(Int_d))
 int$Fecha <- as.yearqtr(int$Fecha, "%d/%m/%Y")
@@ -429,7 +430,7 @@ int <- int %>% group_by(Fecha) %>%
 ##Cargamos la base de datos para la inflación
 inf <- read.csv("Inflacion.csv", header = FALSE)
 inf <- inf %>% filter(!row_number() %in% c(1:29))%>%
-  select(1,4)%>% 
+  dplyr::select(1,4)%>% 
   setNames(., c("Fecha", "Inf_m"))%>%
   mutate(Inf_m = as.numeric(Inf_m))
 inf$Fecha <- as.yearqtr(inf$Fecha, "%d/%m/%Y")
@@ -441,7 +442,7 @@ inf <- inf %>% group_by(Fecha) %>%
 ##Calculamos la tasa de interés real
 table2_d <- int %>% add_column(pi=inf$Inf_q)%>%
   mutate(r=Int_q-pi)%>%
-  select(1,3,4,5)%>%
+  dplyr::select(1,3,4,5)%>%
   setNames(., c("Fecha","i","pi","r"))
 table2_dm <- melt(table2_d, id.vars = "Fecha")
 plot2_d <- ggplot(table2_dm, aes(x=Fecha, y=value ,colour=variable,group=variable))+
@@ -530,16 +531,16 @@ con_c <- con_c %>%setNames(., c("Fecha", "conf_cm"))%>%
   summarise(conf_cm, conf_c= mean(conf_cm), .groups = 'drop')%>%
   distinct(Fecha, .keep_all = TRUE)%>%
   filter(!row_number() %in% c(84:85))%>%
-  select(1,3)
+  dplyr::select(1,3)
 
 con_e <- read.csv("conf_e.csv", header = FALSE)
 con_e$V1<- as.yearqtr(con_e$V1, "%d/%m/%Y")
-con_e <- con_e %>%select(1,2)%>%
+con_e <- con_e %>%dplyr::select(1,2)%>%
   setNames(., c("Fecha", "conf_em"))%>%
   group_by(Fecha) %>% 
   summarise(conf_em, conf_e= mean(conf_em), .groups = 'drop')%>%
   distinct(Fecha, .keep_all = TRUE)%>%
-  select(1,3)
+  dplyr::select(1,3)
 
 ts3 <- ts(con_c, frequency=4, start = c(2001,02))
 ts4 <- ts(con_e, frequency=4, start = c(2001,02))
@@ -619,29 +620,213 @@ Por último, en este ejercicio solo estimamos relaciones lineales de $\Delta I_{
 ### (a)
 **Con el propósito de desarrollar intuición sobre la existencia y fuente de los datos corporativos, vaya al sitio de internet de algún corporativo mexicano y obtenga su reporte anual. De ahí, obtenga el valor de los activos menos los pasivos (excepto el capital) y con ello construya el ``valor en libros'' de la empresa. Posteriormente, de dicho reporte, o del sitio de la BMV o de la BIVA, obtenga el ``valor de capitalización'' de mercado de la misma empresa y finalmente construya la variable ``Q'' como la razón de dichos valores. **
 
+Para este ejercicio se usaron los datos reportados de grupo Lala, tomando como referencia el año 2020. Los datos fueron extraídos de su reporte anual y los datos sobre capitalización de la BMV (ambos en millones de pesos). 
+```{r}
+valorlibroslala<-71978-55013
+valormercadolala<- 41595.66
+Qlala<-valormercadolala/valorlibroslala
+tabla0<-cbind(valormercadolala,valorlibroslala,Qlala)
+knitr::kable(tabla0,"pipe", col.names = c("Valor de mercado (Acciones*Precio)", "Valor en libros (act-Pas)","Q"), align = c("c","c","c"), caption = "Construcción variable Q para grupo Lala. 2020")
+```
+
 ### (b)
 **Construya una medida (no necesariamente una buena) de ``q'' de la empresa utilizando DOS reportes corporativos, idealmente el de un trimestre y el el mismo trimestre del año anterior, y comparando el cambio del valor en libros vs el cambio del valor de capitalización.**
 
+```{r}
+anios<-c(2018,2019,2020)
+valormercado2lala<-c(68360.49,39614.91,41595.66)
+valorlibros2lala<-c(25569,22583,16965)
+q2lala<-c(68360.49/25569,39614.91/22583,41595.66/16965)
+lala<-cbind.data.frame(anios,valormercado2lala,valorlibros2lala,q2lala)
+lala$cambioporcentualvm<-c(NA,-0.42,0.05)
+lala$cambioabsolutovm<-c(NA,-28745,1980.75)
+lala$cambioporcentualvl<-c(NA,-0.1167,-0.25)
+lala$cambioabsolutovl<-c(NA,-2986,-5618)
+lala$cambioporcentualq<-c(NA,-0.34,0.4)
+lala$cambioabsolutoq<-c(NA,-0.9195,0.7)
+
+knitr::kable(lala,"pipe", col.names = c("Años", "Valor de mercado","Valor en libros","Q","Cambio $%$ valor m.","Cambio abs valor m.","Cambio $%$ valor l.","Cambio abs valor l.","Cambio $%$ q","Cambio abs q"), align = c("c","c","c","c","c","c","c","c","c","c"), caption = "Construccion variable Q grupo Lala. Años 2018,2019,2020")
+
+
+```
+
+\newpage
 ### (c)
 **Utilice su cuenta de GitHub.com para entrar al repositorio fisionmail, Colmex\_Macro\_2\_2022 y bajar el archivo de datos que está ahí, está en formato de stata,  ``.dta''. Cree una medida de la tasa de inversión y una medida de q de Tobin: la medida de la tasa de inversión puede ser el gasto en capital (capx) sobre el capital (ppen), o la tasa de cambio en el capital (\%$\Delta$ ppen), o la tasa de cambio de los activos (\%$\Delta$ta). **
+
+```{r}
+#Importacion y manipulacion de la base de datos 
+emisoras <- as.data.frame(read_excel("emisorasfinaltareainv5.xlsx"))%>%drop_na()
+
+```
+
+Para crear la medida de inversión, se utiliza la razón de gasto de capital entre propiedad, planta y equipo neto. A continuación se presenta una tabla con las primeras observaciones de la muestra y sus medidas de las tasas de inversión correspondiente. Tanto el capex como el ppen se encuentran en millones de pesos. 
+
+```{r}
+emisoras$medidatasadeinversion<-as.numeric(emisoras$capex/emisoras$ppen)
+
+tabla1<-cbind(emisoras$empresa, emisoras$capex,emisoras$ppen,emisoras$medidatasadeinversion)
+knitr::kable(head(tabla1,15),"pipe", col.names = c("Empresa", "Gasto en capital (capex)","Planta propiedad y equipo neto", "Medida de inversion"), align = c("c","c", "c","c"), caption = "Medida tasa de inversión a partir de razon de capex a ppen. Primeros 15 datos de la muestra")
+
+```
 
 ### (d)
 **Cree una medida de la ``Q'': el  valor de mercado de la empresa sobre el valor en libros de la empresa, en donde el valor de mercado es es número de acciones por el precio de la acción.**
 
+Sabemos que el valor en libros de la empresa se calcula como: $Activos Totales-Pasivos Totales$. Por su parte, el valor de mercado está en la base de datos con la etiqueta econ_capitalizbursat. Tanto el valor de mercado como el valor en libros se encuentran en millones de pesos. 
+
+```{r}
+emisoras$valorenlibros<-as.numeric(emisoras$activototal-emisoras$pasivototal)
+
+emisoras$Q_1<-as.numeric(emisoras$marketvalue/emisoras$valorenlibros)
+
+tabla2<-cbind(emisoras$empresa,emisoras$marketvalue,emisoras$valorenlibros, emisoras$Q_1)
+knitr::kable(head(tabla2,15),"pipe", col.names = c("Empresa", "Valor de mercado","Valor en libros", "Medida de Q"), align = c("c","c", "c","c"), caption = "Medida Q a partir de razon de valor de mercado a valor en libros. Primeros 15 datos de la muestra")
+```
+
 ### (e)
 **Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo y la ``Q' en el mismo y también de una relación utilizando la ``Q'' del periodo inmediato anterior. **
+
+Para responder a esta pregunta se recurre a una estimación de datos panel, donde por la estructura misma de los datos, se sigue al mismo conjunto de empresas a lo largo del tiempo. Para cada una de las empresas se va analizando la medida construida de inversión que se construyó en c, junto con la medida de Q construida en d. Los resultados para esta estimación presentados en el cuadro 15, no son satisfactorios teóricamente dada la pendiente negativa de Q en t y en t-1. Habría que empezar también por analizar que ambas variables no son estadísticamente distintas de cero, por lo que el análisis queda un poco limitado, por lo que se recurre a otras estimaciones. \newline
+Por los motivos expuestos en el párrafo anterior, se estima la misma relación bajo una estructura de cortes transversales. Se toman 3 años al azar y se corre la regresión propuesta en el ejercicio para tales momentos determinados en el tiempo. En el cuadro 16 se resumen los resultados de esta segunda forma de estimar. Podemos analizar que la estimación para el 2008 como sección cruzada sigue siendo no relacionado con la teoría. No obstante, para el año 2012 se cumple tanto la predicción en el signo como la significancia estadística. Por último, para el año 2014 el resultado es teoricamente el esperado.  \newpage
+  
+```{r, results='asis'}
+
+library(plm)
+
+emisoras <- transform(emisoras,id = as.numeric(factor(empresa)))
+emisoras <- transform(emisoras, unique =apply(emisoras[c("id", "date")], 1, paste, collapse="."))
+emisoras1 <- dplyr::distinct(emisoras, unique,.keep_all= TRUE)
+
+emisoras1<-emisoras1[emisoras1$medidatasadeinversion < 30, ]
+
+emisoras1$Q_1<-emisoras1$Q_1-1
+
+modelo1 <- plm(medidatasadeinversion ~ Q_1   , data = emisoras1, index = c("id", "date"),model = "random")
+modelo_rezagado <- plm(medidatasadeinversion ~ lag(Q_1,1L)  , data = emisoras1, index = c("id", "date"),model = "random")
+stargazer(modelo1, modelo_rezagado, dep.var.labels="$inv_t$",title="Regresiones de Tasa de inversión (estimación panel) ",covariate.labels = c("$q_t$", "$q_{t-1}$"),header = FALSE)
+
+
+```
+
+```{r,results='asis'}
+emisoras2008 <- as.data.frame(read_excel("muestra2008.xlsx"))
+emisoras2012 <- as.data.frame(read_excel("muestra2012.xlsx"))
+emisoras2014 <- as.data.frame(read_excel("muestra2014.xlsx"))
+
+emisoras2008$Q_1<-emisoras2008$Q_1-1
+emisoras2012$Q_1<-emisoras2012$Q_1-1
+emisoras2014$Q_1<-emisoras2014$Q_1-1
+
+
+modelopool2008 <- lm(medidatasadeinversion ~ Q_1   , data = emisoras2008)
+modelopool2012 <- lm(medidatasadeinversion ~ Q_1   , data = emisoras2012)
+modelopool2014 <- lm(medidatasadeinversion ~ Q_1   , data = emisoras2014)
+
+
+stargazer(modelopool2008, modelopool2012,modelopool2014, dep.var.labels="$inv_t$",title="Regresiones de Tasa de inversión (estimación sección cruzada muestra aleatoria por año 2008,2012 y 2014) ",covariate.labels = c("$q_t$"),header = FALSE, column.labels = c("Sección cruzada 2008","Sección cruzada 2012","Sección cruzada 2014"))
+
+```
 
 ### (f)
 **Produzca un estimado del coeficiente del costo de ajuste a partir de las regresiones anteriores.** 
 
+Al ser $\hat{\beta}$ interpretado como $\frac{1}{b}$, ello implica que $b=coste de ajuste=\hat{\beta}^{-1}$. Partiendo de los estimados de sección cruzada para 2012 y 2014, suponiendo a este último como significativo, tenemos las siguientes estimaciones para el coste de ajuste en el cuadro 17. Notamos que la estimación para el 2014 es el que más se acerca a lo estimado por Summers( 1981), y al ser el coeficiente estimado más pequeño de ambos, implicará una mayor rigidez ante choques, de modo que el stock de capital tardará más tiempo en alcanzar un nuevo estado estacionario hipotético. 
+
+```{r}
+costedeajuste2012<-1/0.066
+costedeajuste2014<-1/0.034
+estimacionescostedeajuste<-cbind(costedeajuste2012,costedeajuste2014)
+knitr::kable(estimacionescostedeajuste,"pipe", col.names = c("Costo de ajuste estimado 2012", "Costo de ajuste estimado 2014"), align = c("c","c"), caption = "Estimación de costes de ajuste a partir de modelos sección cruzada. Años 2012 y 2014")
+
+```
+
 ### (g)
 **Explique, suponiendo que la función de costo de ajuste es cuadrática (es decir $C_t=b(I_t/K_t)^2K_t $), qué implican los resultados de sus regresiones sobre el costo de ajuste relativo al capital total para una inversión de 50\% del capital total y qué implican los resultados para el tiempo que le tomaría a una empresa recorrer la mitad mitad del camino entre el capital que tiene, $K$, y el que quisiera tener $K^*$.**
+
+Con la función de costos cuadrática, el costo marginal de ajuste es de la forma $C_t'=2b\frac{I_t}{k_t}$, por tanto, $1+C(I_t)'=q_t$ es $1+2b\frac{I_t}{k_t}=q_t$, ello implica que $\frac{I_t}{k_t}= \frac{1}{2b}(q_t-1)$ Acomplando este resultado a las estimaciones, hablaríamos que el lado izquierdo de la ecuación es la medida de inversión construida, y ahora $\hat{\beta}=\frac{1}{2b},b=\frac{1}{2\hat(\beta)}$.En el cuadro 18 se resume el costo de ajuste $b$, si trabajamos tanto con el pool de datos de 2012 como con el de 2014. 
+```{r}
+costedeajuste2012_2<-1/(2*0.066)
+costedeajuste2014_2<-1/(2*0.034)
+estimacionescostedeajuste_2<-cbind(costedeajuste2012_2,costedeajuste2014_2)
+knitr::kable(estimacionescostedeajuste_2,"pipe", col.names = c("Costo de ajuste estimado 2012", "Costo de ajuste estimado 2014"), align = c("c","c"), caption = "Estimación de costes de ajuste a partir de modelos sección cruzada y función de coste de ajuste cuadrática. Años 2012 y 2014")
+```
+Para calcular el costo de ajuste relativo al capital total para una inversión de 50\% del capital total resolvemos la siguiente ecuación (para 2012 y 2014): 
+$$\frac{C}{K}Modelo2012=(7.575757)(0.5)^2=1.893939$$
+$$\frac{C}{K}Modelo2014=(14.706)(0.5)^2=3.6765$$
+Notamos que el coste de ajuste para el 2012 sería del 189 por ciento del stock de capital de la empresa. Así mismo, en el 2014 sería del 367 por ciento del capital de la empresa. Tenemos resultados que implican una fuerte rigidez de ajuste cuya razón puede estar tanto en la estimación de Q como en el nivel de 50\% del capital total. No obstante, en términos de tiempo, los resultados de Summers sugieren que para costos de ajuste del 64\% del stock de capital total, a la empresa la toma diez años recorrer mitad de camino entre el capital que tiene y el deseado ante un choque. Nuestros estimados refieren entonces a mucho más de 10 años para tan solo recorrer esa mitad de camino, lo que reiteramos, hace dudar de la estimación correcta de Q, pues Q media difiere de la marginal.
 
 ### (h)
 **Simule una relación lineal $Y=a+bX+\epsilon$ y cree tres variables con error de medición $\tilde{X}=X+\epsilon^x$, $\tilde{\tilde{X}}=X-c  \cdot {\epsilon}$ y  $\tilde{Y}=Y+\epsilon^y$. (Es decir, primero invéntese una variable, X, genere una variable $\epsilon$ aleatoria y con esas dos genere una variable Y. Luego genere dos nuevas X's, una afectada aleatoriamente por otro error diferente, $\epsilon^x$, y otra afectada, de manera NEGATIVA, por el mismo error que incluy'o en la simulación de la Y original, y tercero, genere una nueva Y que esté afectada por una tercera variable aleatoria $\epsilon^Y$.  Finalmente, estime varias relaciones lineales:  la de la $Y$ original, con la $X$ original, la de $Y$ original, pero contra $\tilde{X}$ y $\tilde{\tilde{X}}$ y la de $\tilde{Y}$ con la $X$ original, explicando como cambia el coeficiente $\hat{b}$ en cada caso, y relacionándo sus hallazgos con el coeficiente $b$ del inciso anterior.**
 
+$\check{X}=X+\epsilon^x$, $\breve{X}=X-c\epsilon$ y $\check{Y}=Y+\epsilon^y$ Es decir, primero invente una variable X, genere una variable $\epsilon$ aleatoria y con esas dos genere una variable Y. Luego genere dos nuevas X´s, una afectada aleatoriamente por otro error $\epsilon^x$, y otra afectada, de manera negativa, por el mismo error que incluyó en la simulación de la Y original, y tercero, genere una nueva Y que esté afectada por una tercera variable aleatoria $\epsilon^y$. Finalmente estime varias relaciones lineales: la de la Y original, con la X original, la de Y original, contra $\check{X}$ y $\breve{X}$ y la de $\check{Y}$ con la X original, explicando como cambia $\hat{b}$ en cada caso, y relacionando sus hayazgos con el coeficiente $b$ del inciso anterior.
+  \end{enumerate} 
+Como mencionan las instrucciones, el primer paso es inventar una X y una $\epsilon$ aleatoria para generar Y a través de una relación lineal cualquiera ($\alpha, \beta$ arbitrarios). Suponemos que cualquier variable aleatoria se distribuye normal y que tenemos 100 observaciones. Es decir: 
+$$\{ X_i \}\sim N(10,5), {\epsilon_i}\sim N(0,10)$$ además $$ \alpha=1, \beta=5 $$
+El cuadro 19 contiene las primeras 10 observaciones de esta variable Y generada apartir de X y $\epsilon$
+```{r}
+set.seed(2023)
+X<-as.vector(rnorm(100, mean=10, sd=5))
+epsilon<-as.vector(rnorm(100, mean=0, sd=10))
+matriz1<-cbind.data.frame(X,epsilon)
+matriz1$Y<-1+5*(matriz1$X)+matriz1$epsilon
+knitr::kable(head(matriz1,10),"pipe", col.names = c("X", "Epsilon", "Y"), align = c("c","c", "c"), caption = "Creacion variable Y con alpha=1 y beta=5")
+
+```
+
+El siguiente paso es generar dos nuevas X's, una afectada por otro error y otra negativamente por el error descrito en el cuadro 20 con una c arbitraria. De nueva cuenta, suponemos normalidad en el nuevo error $\epsilon^x\sim N(0, 5)$ y una $c=6$. El cuadro 8 es una extensión del 7 incluyendo estas dos nuevas X's y el nuevo error, siendo la X afectada por el nuevo error X_hat y la X creada apartir del primer error, X_hathat. 
+```{r}
+set.seed(2023)
+matriz1$epsilon_x<-rnorm(100, mean = 0, sd=5)
+matriz1$X_hat<-matriz1$X+matriz1$epsilon_x
+matriz1$X_hathat<-matriz1$X-(6*matriz1$epsilon)
+
+knitr::kable(head(matriz1,10),"pipe", col.names = c("X", "Epsilon", "Y", "Epsilon_x", "X_hat", "X_hathat"), align = c("c","c", "c","c","c","c"), caption = "Creacion dos nuevas X's con epsilon_x, epsilon y c=6")
+```
+Por último antes de las regresiones especificadas, se genera una nueva Y afectada por una nueva variable aleatoria $\epsilon^y\sim N(0, 2)$. El cuadro 21 presenta la base de datos final. 
+```{r}
+set.seed(2023)
+matriz1$epsilon_y<-rnorm(100, mean = 0, sd=2)
+matriz1$Y_hat<-matriz1$Y+matriz1$epsilon_y
+
+knitr::kable(head(matriz1,10),"pipe", col.names = c("X", "Epsilon", "Y", "Epsilon_x", "X_hat", "X_hathat", "Epsilon_y", "Y_hat"), align = c("c","c", "c","c","c","c", "c", "c"), caption = "Base de datos final, 3 variables aleatorias generadas, 3 X's y 2 Y's con alpha=1, beta=5 y c=6")
+```
+En el cuadro 22 se encuentran especificadas todas las regresiones solicitadas. 
+```{r, results='asis'}
+yoriginalvsxoriginal<-lm(Y ~ X   , data = matriz1)
+yoriginalvsxhat<-lm(Y ~ X_hat   , data = matriz1)
+yoriginalvsxhathat<-lm(Y ~ X_hathat  , data = matriz1)
+yhatvsxoriginal<-lm(Y_hat ~ X   , data = matriz1)
+
+stargazer(yoriginalvsxoriginal, yoriginalvsxhat, yoriginalvsxhathat, yhatvsxoriginal, dep.var.labels=c("Y", "Y", "Y", "$Y_{hat}$"),title="Regresiones ejercicio h ",covariate.labels = c("X","$Xhat$","$Xhathat$"),header = FALSE, column.labels = c("$Y original vs X original$","$Y original vs Xhat$","$Y original vs Xhathat$","$Yhat vs X original$"), font.size="footnotesize", table.placement="H")
+
+```
+El principal resultado a extraer de las regresiones, es notar que los estimadores reducen su nivel una vez que les incorporamos errores de medición. Cuando hay una relación del estimador con el término de error entonces, ocurre un sesgo hacia abajo, se subestima el impacto de la variable explicativa bajo estas especificaciones. Este ejercicio ilustra entonces las preocupaciones existentes en las estimaciones de Summers. Por un lado, meter un residual sin razón aparente, y por otro, no incorporar un análisis de las fuentes de variación de la variable de lado derecho (las X's). En términos de la q, pensar en dichas variaciones da argumentos para pensar en la subestimación de b, Romer señala lo difícil que es obtener una medición para la q marginal, así como la endogeneidad del problema.
+
 ### (i)
 **Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.**
+
+Siguiendo la metodología desarrollada a lo largo de esta pregunta trabajando con secciones cruzadas para los años 2008,2012 y 2014, el cuadro 23 resume los resultados de estimar $$I_{i}=\alpha+\beta(q_i-1)+ \gamma_i(flujo)+ \epsilon_i, i=2008,2012,2014$$
+
+```{r,results='asis'}
+emisoras2008 <- as.data.frame(read_excel("muestra2008.xlsx"))
+emisoras2012 <- as.data.frame(read_excel("muestra2012.xlsx"))
+emisoras2014 <- as.data.frame(read_excel("muestra2014.xlsx"))
+
+emisoras2008$Q_1<-emisoras2008$Q_1-1
+emisoras2012$Q_1<-emisoras2012$Q_1-1
+emisoras2014$Q_1<-emisoras2014$Q_1-1
+
+
+modelopool2008 <- lm(medidatasadeinversion ~ Q_1 + flujodeefectivo   , data = emisoras2008)
+modelopool2012 <- lm(medidatasadeinversion ~ Q_1 + flujodeefectivo   , data = emisoras2012)
+modelopool2014 <- lm(medidatasadeinversion ~ Q_1 + flujodeefectivo   , data = emisoras2014)
+
+
+stargazer(modelopool2008, modelopool2012,modelopool2014, dep.var.labels="$inv_t$",title="Regresiones de Tasa de inversión vs Q y flujo de efectivo (estimación sección cruzada muestra aleatoria por año 2008,2012 y 2014) ",covariate.labels = c("$q_t$","Flujo de efectivo"),header = FALSE, column.labels = c("Sección cruzada 2008","Sección cruzada 2012","Sección cruzada 2014"), font.size="footnotesize", table.placement="H")
+
+```
+Se puede observar que se mantiene la significancia estadística para el año 2012 con un coeficiente $\hat{\beta}$ mayor respecto a la primera estimación. Para todos los años de la muestra no encontramos significancia estadística asociado al estimador del flujo de efectivo. Este resultado es consistente con los resultados de Fazzari, Hubbard y Petersen (1988), quienes argumentan que a medida que existan limitantes para las empresas de recaudar fondos externamente, el gasto en inversión será sensible a los movimientos internos de su flujo de efectivo. No obstante, recordemos que en la muestra están aquellas empresas públicas, quienes por definición tienen acceso a capital financiero, por lo tanto, existe una intuición detrás de que los flujos de efectivo internos no impongan condiciones a la hora de determinar las decisiones de inversión de dichas empresas.
 
 \newpage
 ## Ejercicio 4.-
