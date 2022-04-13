@@ -249,7 +249,7 @@ pacman::p_load(tidyverse,
                cowplot, ggplot2, scales, viridis, latticeExtra,
                knitr, tinytex, reshape, lubridate, scales, reshape2, seasonal, plm, latex2exp, tibble,Hmisc, zoo,
                dynlm, magrittr, stargazer,xtable,
-               rsq, MASS,jtools)
+               rsq, MASS,jtools, plm)
 
 
 
@@ -692,7 +692,6 @@ Por los motivos expuestos en el párrafo anterior, se estima la misma relación 
   
 ```{r, results='asis'}
 
-library(plm)
 
 emisoras <- transform(emisoras,id = as.numeric(factor(empresa)))
 emisoras <- transform(emisoras, unique =apply(emisoras[c("id", "date")], 1, paste, collapse="."))
