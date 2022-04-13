@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.11)  11 APR 2022 21:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.11)  12 APR 2022 19:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -719,31 +719,31 @@ l.1011
 pdfTeX warning (ext4): destination with the same identifier (name{table.9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1069 \newpage
-               
+l.1069 P
+        rimero vemos que la variable que mejor explica a \(\Delta I_{t}\) es
 pdfTeX warning (ext4): destination with the same identifier (name{table.10}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1069 \newpage
-               ] [17]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1088.
+l.1069 P
+        rimero vemos que la variable que mejor explica a \(\Delta I_{t}\) es] [17]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1114.
 (c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1088.
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 1088.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1114.
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 1114.
 (c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TS1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TS1/lmtt/b/n' tried instead on input line 1088.
+(Font)              Font shape `TS1/lmtt/b/n' tried instead on input line 1114.
 
-Overfull \hbox (41.43797pt too wide) in paragraph at lines 1139--1140
+Overfull \hbox (41.43797pt too wide) in paragraph at lines 1165--1166
 []\T1/lmr/bx/n/10 Explique, su-po-nien-do que la fun-ción de cos-to de ajus-te es cua-drá-ti-ca (es de-cir $C_t=b(I_t/K_t)^^B2K_t
  []
 
-[18] [19] (./Tarea_3.aux
+[18] [19] [20] (./Tarea_3.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
@@ -754,18 +754,18 @@ Package rerunfilecheck Info: File `Tarea_3.out' has not changed.
 (rerunfilecheck)             Checksum: 965B39E284B2915C3CEF06BB35D3D4BD;2570.
  ) 
 Here is how much of TeX's memory you used:
- 14333 strings out of 480210
- 228551 string characters out of 5893135
+ 14334 strings out of 480210
+ 228558 string characters out of 5893135
  582096 words of memory out of 5000000
  31920 multiletter control sequences out of 15000+600000
  519760 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,11n,63p,288b,430s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}<c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/hgoma/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb>
-Output written on Tarea_3.pdf (20 pages, 448814 bytes).
+Output written on Tarea_3.pdf (21 pages, 452650 bytes).
 PDF statistics:
- 461 PDF objects out of 1000 (max. 8388607)
- 383 compressed objects within 4 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 466 PDF objects out of 1000 (max. 8388607)
+ 387 compressed objects within 4 object streams
+ 103 named destinations out of 1000 (max. 500000)
  247 words of extra memory for PDF output out of 10000 (max. 10000000)
 

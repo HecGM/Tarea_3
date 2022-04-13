@@ -361,6 +361,7 @@ table2_b <- data.frame(Fecha=df_Y$Fecha,gr_Y=(df_Y$gr*100),gr_I=(df_I$gr*100), g
 plot2_b <- ggplot()+
   geom_point(data=table2_b, aes(x=gr_Y,y=gr_I), color = "#990066", alpha=0.5, size= .5)+
   labs(title = "Variación porcentual (I~Y)", x="grY",y="grI")+
+  geom_smooth(aes(x=gr_Y,y=gr_I),data=table2_b,method = lm,se = FALSE, color="darkcyan", alpha=0.3)+
   theme_bw()
 plot(plot2_b)
 ```
@@ -583,7 +584,7 @@ mod25 <- dynlm(gr_I ~ gr_Y + r + conf_c + conf_e, data=table2_f)
 stargazer(mod19,mod20,mod21,mod22,mod23,mod24,mod25, dep.var.labels="$grI_{t}$", title="Regresiones múltiples de $grI_{t}$ 2",header = FALSE, omit.stat = c("f", "ser"),covariate.labels=c("$grY_{t}$", "$r_{t}$","$confC_{t}$","$confE_{t}$","Intercepto"), font.size="footnotesize", table.placement="H")
 ```
 
-Vemos que los modelos $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} confC_{t}$ y $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} r_{t} + \beta_{3}confC_{t}$ son los que poseen mejor capacidad explicativa, pero el estimador de $confC_{t}$ no es estadísticamente significativo, y al introducirlo $r_[t]$ tampoco lo es, por lo cual es mejor si no consideramos estas variables.
+Vemos que los modelos $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} confC_{t}$ y $\Delta I_{t}= \alpha + \beta_{1} \Delta Y_{t} + \beta_{2} r_{t} + \beta_{3}confC_{t}$ son los que poseen mejor capacidad explicativa, pero el estimador de $confC_{t}$ no es estadísticamente significativo, y al introducirlo $r_{t}$ tampoco lo es, por lo cual es mejor si no consideramos estas variables.
 
 ```{r, results='asis'}
 ##Modelos múltiples
@@ -603,7 +604,13 @@ Igual que en la serie de la serie anterior es mejor si nos quedamos con el model
 ### (g)
 **Interprete los resultados.** 
 
+Primero vemos que la variable que mejor explica a $\Delta I_{t}$ es $\Delta Y_{t}$ de todos los modelos estimados, la relación es positiva, es decir, si aumenta la tasa de crecimiento aumenta la de la inversión, lo cual tiene mucho sentido con la teoría, cuando aumenta el ingreso transitorio aumenta no lo hace en la misma magnitud el consumo, puesto que los agentes consideran su ingreso permanente, entonces esos shocks de ingreso son ahorrados y se convierten en inversión.
 
+Cabe destacar que la tasa de interés real estimada es importante para la inversión, tienen una relación negativa, lo cual concuerda con la teoría, a los empresarios les importa la cantidad real que van a tener que pagar al adquirir un crédito, pero esta variable solo adquiere relevancia cuando está junto a la tasa de crecimiento del producto por si sola no explica de manera satisfactoria los cambios en $\Delta I_{t}$.
+
+Respecto al resto de variables consideramos que no son importantes para una estimación lineal, esto quiere decir que al introducirlas a los modelos estos pierden o pertinencia estadística, aunque en algunos casos "aumente" la capacidad explicativa del modelo.
+
+Por último, en este ejercicio solo estimamos relaciones lineales de $\Delta I_{t}$ con distintas combinaciones de las variables explicativas, pero nada nos garantiza que el modelo que minimiza distancia con el crecimiento de la inversión sea lineal.
 
 \newpage
 ## Ejercicio 3.-
@@ -636,18 +643,26 @@ Igual que en la serie de la serie anterior es mejor si nos quedamos con el model
 ### (i)
 **Estime los coeficientes de una relación lineal entre la tasa de inversión en un periodo, la $q$ de Tobin en el mismo o en el periodo inmediato anterior, y el flujo de efectivo o las ganancias netas. Interprete los resultados contrastándolos con los resultados que obtuvo anteriormente.**
 
-
+\newpage
 ## Ejercicio 4.-
 **Proponga una mejora al archivo Diccionario de Economía utilizando github.**
 
-
-**Formación Bruta de Capital fijo**: Indicador que mide las variaciones, es decir, las adiciones (adquisiciones) menos las disposiciones (ventas) de activos fijos o bienes duraderos, realizadas por los productores de un cierto territorio durante un período determinado, más los incrementos de valor de los activos no producidos pero que se derivan también de la actividad productiva. 
-
-**Inversión de cartera**: Inversión de posición minoritaria que implican títulos de deuda o de participación en el capital, distintos a los incluidos en la inversión directa o activos de reserva. En este tipo de inversiones extranjeras el objetivo no es el control sobre la gestión de una empresa sino solo los rendimientos generados mediante la percepción de ingresos financieros, la repartición de utilidades o las ganancias de capital.
-
-**Inversión Extranjera Directa**: Categoría de inversión extranjera que involucra la transferencia de capital de entidades económicas de un país hacia otro, con el objetivo de establecer ahí empresas o filiales, así como adquirir u obtener una participación relevante en empresas extranjeras para su control. Esta operación involucra una relación de largo plazo, pues el inversor directo busca obtener una participación duradera en la empresa o entidad extranjera, en este sentido, la inversión extranjera directa (IED) implica que el inversor pretende ejercer un grado significativo de influencia o control en el manejo sobre la unidad de producción. 
+Sugerimos adiciones de términos al diccionario, las cuales enunciaremos a continuación:
 
 
+**Histéresis:** Término que se usa para describir la influencia duradera de los eventos pasados en la tasa natural de desempleo.
 
+**Inflación:** Aumento general de los precios sostenido durante un periodo, se puede dividir en subyacente(no considera los precios de los energéticos) y no subyacente(si considera los precios de los energéticos).
 
+**Ingreso permanente:** Es el ingreso que percibe cada agente a lo largo de su vida ($T$ periodos) $Y^{P}=\sum_{t=1}^{T}Y_{t}$.
 
+**Inversión de cartera:** Inversión de posición minoritaria que implican títulos de deuda o de participación en el capital, distintos a los incluidos en la inversión directa o activos de reserva. En este tipo de inversiones extranjeras el objetivo no es el control sobre la gestión de una empresa sino solo los rendimientos generados mediante la percepción de ingresos financieros, la repartición de utilidades o las ganancias de capital.
+
+**Inversión Extranjera Directa:** Categoría de inversión extranjera que involucra la transferencia de capital de entidades económicas de un país hacia otro, con el objetivo de establecer ahí empresas o filiales, así como adquirir u obtener una participación relevante en empresas extranjeras para su control. Esta operación involucra una relación de largo plazo, pues el inversor directo busca obtener una participación duradera en la empresa o entidad extranjera, en este sentido, la inversión extranjera directa (IED) implica que el inversor pretende ejercer un grado significativo de influencia o control en el manejo sobre la unidad de producción. 
+
+**Formación Bruta de Capital fijo:** Indicador que mide las variaciones, es decir, las adiciones (adquisiciones) menos las disposiciones (ventas) de activos fijos o bienes duraderos, realizadas por los productores de un cierto territorio durante un período determinado, más los incrementos de valor de los activos no producidos pero que se derivan también de la actividad productiva. 
+
+**Utilidad esperada:** En el caso donde existe incertidumbre acerca del futuro los agentes maximizan sobre el valor esperado de la utilidad, es decir, maximizan la suma de la utilidad recibida en cada estado posible ponderadas por su probabilidad de ocurrencia.
+
+**Salarios de Eficiencia:** Las empresas ofrecen salarios mayores al de equilibrio para inducir a
+los trabajadores a ser más productivos.
